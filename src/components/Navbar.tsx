@@ -6,12 +6,14 @@ import {
   Building2,
   ChevronDown,
   ChevronRight,
+  Crown,
   Edit3,
   HelpCircle,
   LayoutDashboard,
   LogOut,
   Menu,
   Search,
+  Settings,
   ShieldCheck,
   Sparkles,
   Target,
@@ -20,8 +22,16 @@ import {
   X,
   Zap,
 } from 'lucide-react';
-import { AppNotification, NavTab, User } from '../types';
+import { AppNotification, NavTab, User, DeepAICreditBalance, SubscriptionInfo } from '../types';
 import { NotificationCenter } from './NotificationCenter';
+import { apiGetCredits, apiGetMySubscription } from '../api';
+
+const CreditWalletModal = React.lazy(() =>
+  import('./CreditWalletModal').then((m) => ({ default: m.CreditWalletModal }))
+);
+const PremiumModal = React.lazy(() =>
+  import('./PremiumModal').then((m) => ({ default: m.PremiumModal }))
+);
 
 export interface NavbarProps {
   currentUser: User | null;
@@ -64,8 +74,99 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const [isCreditWalletOpen, setIsCreditWalletOpen] = useState(false);
+  const [creditWalletInitialView, setCreditWalletInitialView] = useState<'wallet' | 'buy_packs'>('wallet');
+  const [isPremiumModalOpen, setIsPremiumModalOpen] = useState(false);
+  const [premiumModalTab, setPremiumModalTab] = useState<'plans' | 'manage'>('plans');
+  const [premiumModalSource, setPremiumModalSource] = useState<string | null>(null);
+  const [subscriptionState, setSubscriptionState] = useState<SubscriptionInfo | null>(null);
+  const [creditBalance, setCreditBalance] = useState<DeepAICreditBalance | null>(null);
+  const [creditsLoading, setCreditsLoading] = useState<boolean>(true);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const notifMenuRef = useRef<HTMLDivElement>(null);
+
+  const loadCredits = () => {
+    if (currentUser?.id) {
+      setCreditsLoading(true);
+      apiGetCredits(currentUser.id)
+        .then((bal) => {
+          setCreditBalance(bal);
+        })
+        .catch((err) => {
+          console.error('[Navbar] Failed to load credits:', err);
+          setCreditBalance(null);
+        })
+        .finally(() => {
+          setCreditsLoading(false);
+        });
+    } else {
+      setCreditBalance(null);
+      setCreditsLoading(false);
+    }
+  };
+
+  const loadSubscription = () => {
+    if (currentUser?.id) {
+      apiGetMySubscription(currentUser.id)
+        .then((sub) => setSubscriptionState(sub))
+        .catch((err) => console.error('[Navbar] Failed to load subscription:', err));
+    } else {
+      setSubscriptionState(null);
+    }
+  };
+
+  useEffect(() => {
+    loadCredits();
+    loadSubscription();
+
+    const handleCreditsUpdated = (e: any) => {
+      if (typeof e?.detail?.credits === 'number') {
+        setCreditBalance((prev) =>
+          prev ? { ...prev, total: e.detail.credits, totalAvailable: e.detail.credits } : null
+        );
+      }
+      loadCredits();
+    };
+
+    const handleOpenWalletEvent = (e: any) => {
+      const view = e?.detail?.view === 'buy_packs' ? 'buy_packs' : 'wallet';
+      setCreditWalletInitialView(view);
+      setIsPremiumModalOpen(false);
+      setIsCreditWalletOpen(true);
+    };
+
+    const handleSubUpdated = () => {
+      loadSubscription();
+    };
+
+    const handleOpenPremiumModal = (e: any) => {
+      const tab = e?.detail?.tab === 'manage' ? 'manage' : 'plans';
+      const source = e?.detail?.source || (e?.detail?.fromWallet ? 'credit_wallet' : null);
+      setPremiumModalSource(source);
+      setPremiumModalTab(tab);
+      setIsCreditWalletOpen(false);
+      setIsPremiumModalOpen(true);
+    };
+
+    const handleFocus = () => {
+      loadCredits();
+      loadSubscription();
+    };
+
+    window.addEventListener('firstround:credits-updated', handleCreditsUpdated);
+    window.addEventListener('firstround:open-credit-wallet', handleOpenWalletEvent);
+    window.addEventListener('firstround:subscription-updated', handleSubUpdated);
+    window.addEventListener('firstround:open-premium-modal', handleOpenPremiumModal);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('firstround:credits-updated', handleCreditsUpdated);
+      window.removeEventListener('firstround:open-credit-wallet', handleOpenWalletEvent);
+      window.removeEventListener('firstround:subscription-updated', handleSubUpdated);
+      window.removeEventListener('firstround:open-premium-modal', handleOpenPremiumModal);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [currentUser?.id]);
 
   const handleNav = (tab: NavTab) => {
     if (onTabChange) {
@@ -236,7 +337,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>Leaderboard</span>
                 </button>
 
-                {currentUser?.role === 'admin' && (
+                {(currentUser?.role === 'admin' || currentUser?.role === 'super_admin') && (
                   <button
                     id="nav-admin-btn"
                     onClick={() => handleNav('admin')}
@@ -267,6 +368,42 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>Toolkit</span>
                 </button>
               )}
+
+              {/* Deep AI Credit Wallet Navbar Trigger */}
+              {currentUser && (
+                <button
+                  id="header-credits-wallet-btn"
+                  onClick={() => {
+                    setIsCreditWalletOpen(true);
+                    setIsUserMenuOpen(false);
+                    setIsNotificationOpen(false);
+                  }}
+                  title="Open Deep AI Credit Wallet"
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-50 active:bg-slate-100 text-[#00223E] text-xs rounded-xl border border-slate-200 hover:border-slate-300 shadow-2xs transition-all duration-150 active:scale-[0.98] shrink-0"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#FFC412] fill-[#FFC412] shrink-0" />
+                  {creditsLoading ? (
+                    <span className="font-medium text-slate-500">Checking...</span>
+                  ) : creditBalance === null ? (
+                    <span className="font-medium text-slate-700">AI Credits</span>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      <span className="font-bold text-[#00223E]">
+                        {typeof creditBalance.total === 'number'
+                          ? creditBalance.total
+                          : typeof creditBalance.totalAvailable === 'number'
+                          ? creditBalance.totalAvailable
+                          : 0}
+                      </span>
+                      <span className="font-medium text-slate-600">
+                        {(creditBalance.total ?? creditBalance.totalAvailable ?? 0) === 1 ? 'AI Credit' : 'AI Credits'}
+                      </span>
+                    </div>
+                  )}
+                </button>
+              )}
+
+
 
               {/* Notification Bell */}
               <div className="relative" ref={notifMenuRef}>
@@ -323,8 +460,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                     aria-expanded={isUserMenuOpen}
                     title="User Profile & Settings"
                   >
-                    <div className="w-7 h-7 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shadow-2xs group-hover:ring-2 group-hover:ring-amber-400 transition-all shrink-0">
-                      {userInitial}
+                    <div className="w-7 h-7 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shadow-2xs group-hover:ring-2 group-hover:ring-amber-400 transition-all shrink-0 overflow-hidden">
+                      {(currentUser.avatarUrl || currentUser.avatar) ? (
+                        <img src={currentUser.avatarUrl || currentUser.avatar} alt={displayName} className="w-full h-full object-cover" />
+                      ) : (
+                        <span>{userInitial}</span>
+                      )}
                     </div>
                     <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-700 transition-transform hidden sm:inline" />
                   </button>
@@ -332,13 +473,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                   {/* Clean Profile & Account Dropdown */}
                   {isUserMenuOpen && (
                     <div className="absolute right-0 mt-2 w-56 bg-surface border border-border rounded-2xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-150">
-                      <div className="px-4 py-2.5 border-b border-slate-100">
-                        <p className="text-xs font-bold text-text-primary truncate">
-                          {displayName}
-                        </p>
-                        <p className="text-[11px] text-text-muted truncate mt-0.5">
-                          {currentUser.targetCompany ? `Target: ${currentUser.targetCompany}` : 'Target company not set'}
-                        </p>
+                      <div className="px-4 py-2.5 border-b border-slate-100 flex items-center gap-3">
+                        <div className="w-8 h-8 rounded-full bg-primary text-white font-bold text-xs flex items-center justify-center shrink-0 overflow-hidden">
+                          {(currentUser.avatarUrl || currentUser.avatar) ? (
+                            <img src={currentUser.avatarUrl || currentUser.avatar} alt={displayName} className="w-full h-full object-cover" />
+                          ) : (
+                            <span>{userInitial}</span>
+                          )}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-xs font-bold text-text-primary truncate">
+                            {displayName}
+                          </p>
+                          <p className="text-[11px] text-text-muted truncate mt-0.5">
+                            {currentUser.targetCompany ? `Target: ${currentUser.targetCompany}` : 'Target company not set'}
+                          </p>
+                        </div>
                       </div>
 
                       <div className="py-1">
@@ -349,6 +499,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                         >
                           <UserIcon className="w-3.5 h-3.5 text-slate-400" />
                           <span>Candidate Profile</span>
+                        </button>
+
+                        <button
+                          id="dropdown-account-settings-btn"
+                          onClick={() => {
+                            setIsUserMenuOpen(false);
+                            if (onTabChange) onTabChange('settings');
+                            else if (setActiveTab) setActiveTab('settings');
+                          }}
+                          className="w-full px-4 py-2 text-left text-xs font-semibold text-slate-700 hover:bg-app-bg hover:text-text-primary flex items-center gap-2"
+                        >
+                          <Settings className="w-3.5 h-3.5 text-slate-400" />
+                          <span>Account Settings</span>
                         </button>
                       </div>
 
@@ -469,7 +632,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   );
                 })}
 
-                {currentUser?.role === 'admin' && (
+                {(currentUser?.role === 'admin' || currentUser?.role === 'super_admin') && (
                   <button
                     id="mobile-nav-admin-btn"
                     onClick={() => handleNav('admin')}
@@ -512,6 +675,37 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </div>
                       </div>
                       <ChevronRight className="w-4 h-4 text-amber-700 shrink-0" />
+                    </button>
+                  </div>
+                )}
+
+                {/* Deep AI Credit Wallet Drawer Trigger */}
+                {currentUser && (
+                  <div className="pt-2">
+                    <button
+                      id="mobile-drawer-credits-btn"
+                      onClick={() => {
+                        setIsMobileDrawerOpen(false);
+                        setIsCreditWalletOpen(true);
+                      }}
+                      className="w-full min-h-[46px] p-3 rounded-xl bg-white hover:bg-slate-50 active:bg-slate-100 border border-slate-200 text-left transition-colors flex items-center justify-between gap-2 shadow-2xs"
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 border border-amber-200 flex items-center justify-center shrink-0 font-bold">
+                          <Sparkles className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="text-xs font-bold text-[#00223E] truncate">
+                            Deep AI Credits
+                          </div>
+                          <div className="text-[10px] text-slate-500 truncate">
+                            {creditsLoading
+                              ? 'Checking balance...'
+                              : `${creditBalance?.total ?? creditBalance?.totalAvailable ?? 0} available for Practice`}
+                          </div>
+                        </div>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
                     </button>
                   </div>
                 )}
@@ -571,6 +765,26 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
       )}
+      {/* Deep AI Credit Wallet Modal */}
+      <CreditWalletModal
+        isOpen={isCreditWalletOpen}
+        onClose={() => setIsCreditWalletOpen(false)}
+        currentUser={currentUser}
+        creditBalance={creditBalance}
+        isLoading={creditsLoading}
+        onRefresh={loadCredits}
+        initialView={creditWalletInitialView}
+      />
+
+      {/* FirstRound Premium Modal */}
+      <PremiumModal
+        isOpen={isPremiumModalOpen}
+        onClose={() => setIsPremiumModalOpen(false)}
+        currentUser={currentUser}
+        initialTab={premiumModalTab}
+        source={premiumModalSource}
+        onRefreshSubscription={loadSubscription}
+      />
     </>
   );
 };

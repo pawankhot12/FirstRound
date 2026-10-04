@@ -23,7 +23,9 @@ import {
   X,
   Zap,
 } from 'lucide-react';
-import { CompanyInfo, TestSeries } from '../types';
+import { CompanyInfo, TestSeries, Advertisement } from '../types';
+import { SponsorAdSlot } from './SponsorAdSlot';
+import { TopSponsorAdSlot } from './TopSponsorBanner';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -39,6 +41,39 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   companies = [],
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [landingAds, setLandingAds] = useState<Advertisement[]>([]);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    const loadLandingAds = () => {
+      fetch('/api/advertisements/active?placement=LANDING_TOP')
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMounted && data?.success) {
+            if (Array.isArray(data.advertisements)) {
+              setLandingAds(data.advertisements);
+            } else if (data.advertisement) {
+              setLandingAds([data.advertisement]);
+            } else {
+              setLandingAds([]);
+            }
+          } else if (isMounted) {
+            setLandingAds([]);
+          }
+        })
+        .catch(() => {
+          if (isMounted) setLandingAds([]);
+        });
+    };
+
+    loadLandingAds();
+    window.addEventListener('firstround:sponsors-updated', loadLandingAds);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener('firstround:sponsors-updated', loadLandingAds);
+    };
+  }, []);
 
   const supportedRecruiters = [
     { name: 'TCS', role: 'NQT / Prime / Digital', color: 'border-sky-200 bg-sky-50 text-sky-900' },
@@ -60,6 +95,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 
   return (
     <div className="min-h-screen bg-app-bg text-text-primary flex flex-col font-['Plus_Jakarta_Sans'] selection:bg-amber-300 selection:text-text-primary no-scrollbar overflow-y-auto">
+      {/* TOP SPONSOR BANNER — ONLY IF ACTIVE */}
+      <TopSponsorAdSlot ads={landingAds} placement="LANDING_TOP" />
+
       {/* ========================================================================= */}
       {/* 1. PUBLIC NAVBAR                                                          */}
       {/* ========================================================================= */}
@@ -510,6 +548,15 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 5.5 SPONSOR PARTNERS CAROUSEL                                            */}
+      {/* ========================================================================= */}
+      <section className="py-8 bg-app-bg border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <SponsorAdSlot />
         </div>
       </section>
 

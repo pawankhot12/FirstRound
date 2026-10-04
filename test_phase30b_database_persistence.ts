@@ -42,11 +42,11 @@ async function run() {
     } catch (e) {}
 
     try {
-      execSync(`node --import tsx test_phase30b_database_persistence.ts --write`, {
+      execSync(`npx tsx test_phase30b_database_persistence.ts --write`, {
         env: { ...process.env, SQLITE_DB_PATH: DB_FILE },
         stdio: 'inherit',
       });
-      execSync(`node --import tsx test_phase30b_database_persistence.ts --verify`, {
+      execSync(`npx tsx test_phase30b_database_persistence.ts --verify`, {
         env: { ...process.env, SQLITE_DB_PATH: DB_FILE },
         stdio: 'inherit',
       });

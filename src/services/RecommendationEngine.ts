@@ -180,7 +180,7 @@ export class RecommendationEngine {
     weakQuestions: WeakQuestionItem[] = []
   ): SprintTrackStep[] {
     const ranked = this.rankAssessments(tests, user, userAttempts, weakQuestions);
-    const targetRole = user?.targetRole || 'Software Developer';
+    const targetRole = user?.targetRole || '';
     const attemptedMap = new Map<string, TestAttempt>();
     userAttempts.forEach((a) => {
       const tid = a.testSeriesId || (a as any).testId;

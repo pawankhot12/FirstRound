@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { apiGetTestHistory } from '../api';
+import { apiGetTestHistory, apiGetMyEntitlements, apiGetMySubscription, apiSelectPlusAssessment, apiDeselectPlusAssessment } from '../api';
 import {
   ArrowLeft,
   ArrowRight,
@@ -9,6 +9,7 @@ import {
   Clock,
   Code2,
   Cpu,
+  Crown,
   Database,
   ExternalLink,
   FileCode,
@@ -16,6 +17,7 @@ import {
   Filter,
   HelpCircle,
   Layers,
+  Lock,
   Play,
   RotateCcw,
   Search,
@@ -26,7 +28,9 @@ import {
   Trophy,
   X,
   Zap,
+  Loader2,
 } from 'lucide-react';
+import { startRazorpayPurchase } from '../services/razorpayService';
 import { ExploreFilters } from './explore/filters/ExploreFilters';
 import {
   CompanyInfo,
@@ -40,6 +44,7 @@ import {
   TestAttempt,
   WeakQuestionItem,
   VerificationStatus,
+  SubscriptionInfo,
 } from '../types';
 import { recommendationEngine } from '../services/RecommendationEngine';
 
@@ -168,17 +173,126 @@ export const TestHub: React.FC<TestHubProps> = ({
   onStartTest,
   onNavigateTab,
 }) => {
+  // [TestPerf] StartTest timing start
+  const handleStartTestWithPerf = (test: TestSeries, mode: TestMode) => {
+    console.time('[TestPerf] StartTest');
+    onStartTest(test, mode);
+    console.timeEnd('[TestPerf] StartTest');
+  };
   const [testHistory, setTestHistory] = useState<any[]>([]);
+  const [unlockedAssessments, setUnlockedAssessments] = useState<Set<string>>(new Set());
+  const [purchasingTestId, setPurchasingTestId] = useState<string | null>(null);
 
   useEffect(() => {
     if (currentUser?.id) {
-      apiGetTestHistory(currentUser.id)
-        .then(setTestHistory)
-        .catch(console.error);
+      console.time('[TestPerf] TestHubDataLoad');
+      Promise.all([
+        apiGetTestHistory(currentUser.id).catch(() => []),
+        apiGetMyEntitlements(currentUser.id).catch(() => ({ entitlements: [] })),
+        apiGetMySubscription(currentUser.id).catch(() => null),
+      ]).then(([historyRes, entitlementsRes, subRes]) => {
+        setTestHistory(historyRes || []);
+        if (entitlementsRes?.entitlements) {
+          setUnlockedAssessments(new Set(entitlementsRes.entitlements.map((e) => e.assessmentId)));
+        }
+        setSubscription(subRes);
+        console.timeEnd('[TestPerf] TestHubDataLoad');
+      });
     } else {
       setTestHistory([]);
+      setUnlockedAssessments(new Set());
+      setSubscription(null);
     }
   }, [currentUser?.id, userAttempts.length]);
+
+  useEffect(() => {
+    const handleEntitlementUpdated = () => {
+      if (currentUser?.id) {
+        apiGetMyEntitlements(currentUser.id)
+          .then((res) => {
+            if (res?.entitlements) {
+              setUnlockedAssessments(new Set(res.entitlements.map((e) => e.assessmentId)));
+            }
+          })
+          .catch(console.error);
+      }
+    };
+    window.addEventListener('firstround:entitlement-updated', handleEntitlementUpdated);
+    return () => window.removeEventListener('firstround:entitlement-updated', handleEntitlementUpdated);
+  }, [currentUser?.id]);
+
+  const [subscription, setSubscription] = useState<SubscriptionInfo | null>(null);
+  const [selectingTestId, setSelectingTestId] = useState<string | null>(null);
+
+  const isAdminUser = currentUser?.role === 'admin' || currentUser?.role === 'super_admin';
+  const activePlan = subscription ? subscription.plan : (currentUser?.plan || 'FREE');
+  const isSubActive = subscription
+    ? (subscription.status || '').toLowerCase() === 'active'
+    : ((currentUser?.subscriptionStatus || '').toLowerCase() === 'active');
+  const isProOrPremium = isSubActive && (activePlan === 'PRO' || activePlan === 'PREMIUM');
+  const isPlusActive = !isAdminUser
+    ? (isSubActive && activePlan === 'PLUS')
+    : Boolean(subscription && subscription.plan === 'PLUS' && (subscription.status || '').toLowerCase() === 'active');
+  const plusSelections = useMemo(() => subscription?.selectedAssessmentIds || [], [subscription]);
+
+  const handleSelectPlusAssessment = async (testId: string) => {
+    if (!currentUser?.id) return;
+    if (plusSelections.length >= 2 && !plusSelections.includes(testId)) {
+      alert('You can select up to 2 Premium tests with Plus.');
+      return;
+    }
+    setSelectingTestId(testId);
+    try {
+      const res = await apiSelectPlusAssessment(testId, currentUser.id);
+      if (res.success) {
+        setSubscription((prev) => (prev ? { ...prev, selectedAssessmentIds: res.selections } : null));
+      }
+    } catch (err: any) {
+      alert(err.message || 'Failed to select Premium assessment.');
+    } finally {
+      setSelectingTestId(null);
+    }
+  };
+
+  const handleDeselectPlusAssessment = async (testId: string) => {
+    if (!currentUser?.id) return;
+    setSelectingTestId(testId);
+    try {
+      const res = await apiDeselectPlusAssessment(testId, currentUser.id);
+      if (res.success) {
+        setSubscription((prev) => (prev ? { ...prev, selectedAssessmentIds: res.selections } : null));
+      }
+    } catch (err: any) {
+      alert(err.message || 'Failed to deselect Premium assessment.');
+    } finally {
+      setSelectingTestId(null);
+    }
+  };
+
+  const handleUnlockAssessment = (test: TestSeries) => {
+    if (!currentUser?.id) {
+      alert('Please sign in to unlock this assessment.');
+      return;
+    }
+
+    setPurchasingTestId(test.id);
+
+    startRazorpayPurchase({
+      productType: 'ASSESSMENT',
+      productId: test.id,
+      userId: currentUser.id,
+      userName: currentUser.name,
+      userEmail: currentUser.email,
+      onSuccess: () => {
+        setPurchasingTestId(null);
+        setUnlockedAssessments((prev) => new Set([...prev, test.id]));
+      },
+      onError: (err) => {
+        setPurchasingTestId(null);
+        alert(err || 'Failed to complete assessment purchase.');
+      },
+    });
+  };
 
   const getTestHistoryStatus = (testId: string) => {
     return testHistory.find((h) => h.testId === testId);
@@ -204,6 +318,7 @@ export const TestHub: React.FC<TestHubProps> = ({
   // Cross-category filters
   const [selectedRole, setSelectedRole] = useState<string>('All');
   const [selectedAvailability, setSelectedAvailability] = useState<string>('All'); // 'All' | 'coming_soon' | 'ready'
+  const [showPremiumInfoModal, setShowPremiumInfoModal] = useState(false);
 
   // Filter tests strictly belonging to the new 3-category architecture
   // (Old seeded tests are filtered out so they do not appear in the Explore catalogue)
@@ -483,7 +598,7 @@ export const TestHub: React.FC<TestHubProps> = ({
             </h1>
             <p className="text-xs sm:text-sm text-text-muted max-w-2xl mt-0.5">
               {selectedCategory === 'categories'
-                ? 'Build skills, practice technical concepts, and simulate real placement assessments.'
+                ? `${categoryCounts.total} active assessments available in production catalog`
                 : CATEGORIES_CONFIG[selectedCategory].description}
             </p>
           </div>
@@ -495,11 +610,36 @@ export const TestHub: React.FC<TestHubProps> = ({
               className="text-[11px] sm:text-xs font-bold px-3 py-1 bg-surface-hover border border-border/90 text-slate-700 rounded-full shadow-2xs"
             >
               {selectedCategory === 'categories'
-                ? `${categoryCounts.total} Available Tests`
+                ? `${categoryCounts.total} Active Assessments`
                 : `${categoryCounts[selectedCategory]} Available Tests`}
             </span>
           </div>
         </div>
+
+        {/* FirstRound Plus Selection Indicator Banner */}
+        {isPlusActive && (
+          <div id="plus-selection-banner" className="bg-gradient-to-r from-amber-500/10 via-amber-400/5 to-transparent border border-amber-300/80 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-2xs mt-3">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 font-black flex items-center justify-center shrink-0 shadow-2xs border border-amber-500">
+                <Crown className="w-5 h-5 text-slate-950 fill-slate-950" />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  FirstRound Plus Active
+                  <span className="px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 shadow-2xs">
+                    PLUS
+                  </span>
+                </h3>
+                <p className="text-xs text-slate-600">
+                  Select up to 2 Premium assessments to unlock full practice & exam access.
+                </p>
+              </div>
+            </div>
+            <div className="shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface border border-amber-300 shadow-2xs font-extrabold text-xs text-slate-900">
+              <span className="text-amber-600 text-sm font-black">{plusSelections.length}/2</span> Selected
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ========================================================= */}
@@ -794,22 +934,52 @@ export const TestHub: React.FC<TestHubProps> = ({
           {/* Test Cards Grid */}
           {filteredCategoryTests.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredCategoryTests.map((test) => {
+              {filteredCategoryTests.filter((test): test is TestSeries => Boolean(test && test.id)).map((test) => {
                 const isComingSoon = test.status === 'coming_soon';
+                const isPremiumAssessment = test.accessType === 'PREMIUM';
+                const isPlusSelected = Boolean(plusSelections && plusSelections.includes(test.id));
+                const isIndividuallyUnlocked = Boolean(currentUser && unlockedAssessments && unlockedAssessments.has(test.id));
+
+                const hasAccess = !isPremiumAssessment || Boolean(
+                  currentUser && (
+                    currentUser.role === 'admin' ||
+                    currentUser.role === 'super_admin' ||
+                    (unlockedAssessments && unlockedAssessments.has(test.id)) ||
+                    isProOrPremium ||
+                    (isPlusActive && isPlusSelected)
+                  )
+                );
+
+                const isLocked = isPremiumAssessment && !hasAccess;
+
                 return (
                   <div
                     key={test.id}
                     id={`test-card-${test.id}`}
-                    className={`bg-surface rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 border transition-colors ${
+                    className={`bg-surface rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 border transition-all relative overflow-hidden ${
                       isComingSoon
                         ? 'border-border/70 opacity-90'
+                        : isLocked
+                        ? 'border-amber-300/80 bg-gradient-to-b from-white to-amber-500/[0.02]'
                         : 'border-border/90 hover:border-slate-300'
                     }`}
                   >
+                    {/* Content Layer (Always unblurred and fully readable) */}
                     <div className="space-y-2.5">
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex items-center gap-2 flex-wrap">
-                          {/* Coming Soon pill replaces the verification badge for blueprint tests */}
+                          {/* Unified PREMIUM badge */}
+                          {isPremiumAssessment && (
+                            <span
+                              id={`premium-badge-${test.id}`}
+                              title="Premium Assessment"
+                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-amber-400 text-slate-950 shadow-2xs border border-amber-500"
+                            >
+                              <Crown className="w-3 h-3 text-slate-950 fill-slate-950" />
+                              <span>PREMIUM</span>
+                            </span>
+                          )}
+                          {/* Coming Soon pill replaces verification badge for blueprint tests */}
                           {isComingSoon ? (
                             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-surface-hover text-text-muted border border-border">
                               <Layers className="w-3 h-3" />
@@ -880,44 +1050,98 @@ export const TestHub: React.FC<TestHubProps> = ({
                       </div>
                     </div>
 
-                    <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
-                      <span className="text-xs text-text-muted font-semibold">
-                        {isComingSoon
-                          ? `Planned: ${test.totalQuestions || test.questionCount || 0} Qs`
-                          : `${test.totalQuestions || test.questionCount || 0} Questions`}
-                      </span>
-                      {isComingSoon ? (
-                        /* Non-playable disabled button for blueprint tests */
-                        <button
-                          id={`coming-soon-btn-${test.id}`}
-                          disabled
-                          title="Questions are being prepared for this test"
-                          className="min-h-[38px] px-3.5 py-1.5 bg-surface-hover text-slate-400 text-xs font-bold rounded-xl border border-border cursor-not-allowed flex items-center gap-1.5"
-                        >
-                          <Layers className="w-3.5 h-3.5" />
-                          <span>Questions Pending</span>
-                        </button>
-                      ) : (
-                        /* Normal playable buttons for ready tests */
-                        <div className="flex items-center gap-2">
-                          <button
-                            id={`practice-btn-${test.id}`}
-                            onClick={() => onStartTest(test, 'practice')}
-                            className="min-h-[38px] px-3.5 py-1.5 bg-surface hover:bg-app-bg text-slate-700 text-xs font-bold rounded-xl border border-border transition-colors flex items-center gap-1.5"
-                          >
-                            <span>Practice</span>
-                          </button>
-                          <button
-                            id={`start-test-btn-${test.id}`}
-                            onClick={() => onStartTest(test, 'exam')}
-                            className="min-h-[38px] px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
-                          >
-                            <Play className="w-3.5 h-3.5 fill-white" />
-                            <span>Start Test</span>
-                          </button>
-                        </div>
-                      )}
-                    </div>
+                    {/* Bottom Action Bar */}
+                    {hasAccess ? (
+                       // Accessible test (including Premium with access)
+                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                         <span className="text-xs text-text-muted font-semibold">
+                           {test.totalQuestions || test.questionCount || 0} Questions
+                         </span>
+                         <div className="flex items-center gap-2">
+                           <button
+                             id={`practice-btn-${test.id}`}
+                             onClick={() => handleStartTestWithPerf(test, 'practice')}
+                             className="min-h-[38px] px-3.5 py-1.5 bg-surface hover:bg-app-bg text-slate-700 text-xs font-bold rounded-xl border border-border transition-colors flex items-center gap-1.5"
+                           >
+                             Practice
+                           </button>
+                           <button
+                             id={`start-test-btn-${test.id}`}
+                             onClick={() => handleStartTestWithPerf(test, 'exam')}
+                             className="min-h-[38px] px-3.5 py-1.5 bg-primary hover:bg-primary-hover text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center gap-1.5"
+                           >
+                             <Play className="w-3.5 h-3.5 fill-white" />
+                             <span>Start Test</span>
+                           </button>
+                         </div>
+                       </div>
+                     ) : isPlusActive && isPremiumAssessment ? (
+                       // Plus selection UI when not yet unlocked
+                       <div className="pt-3 border-t border-slate-200/80 -mx-5 -mb-5 p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 rounded-b-2xl bg-slate-50/50">
+                         <span className="text-xs text-slate-600 font-semibold">
+                           {test.totalQuestions || test.questionCount || 0} Questions • Plus Assessment
+                         </span>
+                         <div className="flex items-center gap-2 shrink-0">
+                           {plusSelections.length < 2 ? (
+                             <button
+                               id={`select-plus-btn-${test.id}`}
+                               disabled={selectingTestId === test.id}
+                               onClick={() => handleSelectPlusAssessment(test.id)}
+                               className="px-4 py-1.5 bg-amber-400 hover:bg-amber-300 active:bg-amber-500 text-slate-950 text-xs font-extrabold rounded-xl shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                             >
+                               {selectingTestId === test.id ? (
+                                 <>
+                                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                   <span>Selecting...</span>
+                                 </>
+                               ) : (
+                                 <>
+                                   <Crown className="w-3.5 h-3.5" />
+                                   <span>Select Assessment</span>
+                                 </>
+                               )}
+                             </button>
+                           ) : (
+                             <button
+                               id={`plus-limit-btn-${test.id}`}
+                               disabled
+                               className="px-3.5 py-1.5 bg-slate-100 text-slate-500 text-xs font-bold rounded-xl border border-slate-200 cursor-not-allowed flex items-center gap-1.5"
+                             >
+                               <Lock className="w-3.5 h-3.5" />
+                               <span>2/2 Selections Used</span>
+                             </button>
+                           )}
+                         </div>
+                       </div>
+                     ) : (
+                       // Locked Premium without Plus: show unlock only
+                       <div className="pt-3 border-t border-amber-200/80 bg-amber-500/[0.04] -mx-5 -mb-5 p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 rounded-b-2xl">
+                         <div className="flex items-center gap-1.5 text-slate-700 font-bold text-xs">
+                           <Lock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                           <span>{test.totalQuestions || test.questionCount || 0} Questions • Premium</span>
+                         </div>
+                         <div className="flex items-center gap-2 shrink-0">
+                           <button
+                             id={`locked-btn-${test.id}`}
+                             disabled={purchasingTestId === test.id}
+                             onClick={() => handleUnlockAssessment(test)}
+                             className="px-3.5 py-1.5 bg-amber-400 hover:bg-amber-300 active:bg-amber-500 text-slate-950 text-xs font-extrabold rounded-xl shadow-2xs transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                           >
+                             {purchasingTestId === test.id ? (
+                               <>
+                                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                                 <span>Unlocking...</span>
+                               </>
+                             ) : (
+                               <>
+                                 <Lock className="w-3.5 h-3.5" />
+                                 <span>Get Premium</span>
+                               </>
+                             )}
+                           </button>
+                         </div>
+                       </div>
+                     )}
                   </div>
                 );
               })}
@@ -1002,6 +1226,67 @@ export const TestHub: React.FC<TestHubProps> = ({
               </div>
             </div>
           )}
+        </div>
+      )}
+
+      {/* MODAL: FIRSTROUND PREMIUM INFORMATIONAL DRAWER */}
+      {showPremiumInfoModal && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-md shadow-2xl p-6 space-y-5 text-slate-900 animate-in fade-in zoom-in duration-150">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-bold shadow-xs">
+                  <Crown className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold font-['Outfit'] text-slate-950">FirstRound Premium</h3>
+                  <p className="text-2xs text-amber-700 font-bold uppercase tracking-wider">Coming Soon in Phase 2</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowPremiumInfoModal(false)}
+                className="p-1 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs text-slate-600 leading-relaxed">
+              <div className="p-3.5 bg-amber-50/70 border border-amber-200 rounded-2xl space-y-1.5">
+                <p className="font-bold text-amber-950 text-xs">FirstRound is primarily 100% FREE.</p>
+                <p className="text-2xs text-amber-900">
+                  All foundation practice tests, canonical question banks, community leaderboards, and the FirstRound AI Copilot remain completely free for every student.
+                </p>
+              </div>
+
+              <div className="space-y-2 pt-1">
+                <p className="font-bold text-slate-900">FirstRound Premium will unlock only:</p>
+                <ul className="space-y-1.5 text-2xs text-slate-700">
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">1.</span>
+                    <span>Exclusive company premium simulation mock assessments.</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-amber-600 font-bold">2.</span>
+                    <span>Deep AI Socratic Tutor guidance inside Practice Mode.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <p className="text-2xs text-slate-500 italic pt-1">
+                Real payment integrations will be added in Phase 2 without affecting your current free experience.
+              </p>
+            </div>
+
+            <div className="pt-2">
+              <button
+                onClick={() => setShowPremiumInfoModal(false)}
+                className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
+              >
+                Got It
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

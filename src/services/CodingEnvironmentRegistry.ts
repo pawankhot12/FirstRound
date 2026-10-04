@@ -10,18 +10,9 @@ export const CodingEnvironmentRegistry = {
    * Resolves the appropriate React component for a given coding question
    * driven strictly by the question type and codingConfig.problemType.
    */
-  resolve(question: Question): React.ComponentType<any> {
-    if (question.questionType === 'SQL') {
-      // Future SQLEnvironment will be returned here
-      // For now we fall back to a generic component or throw if unsupported
-      // But we will return GenericCodingEnvironment as placeholder
+  resolve(question?: Question): React.ComponentType<any> {
+    if (!question || question.questionType !== 'CODING') {
       return GenericCodingEnvironment;
-    }
-    
-    if (question.questionType !== 'CODING') {
-      // Technically MCQ should be handled outside this registry by MCQRenderer,
-      // but if asked to resolve an environment, we shouldn't crash unless it's strictly CODING expected.
-      throw new Error(`Cannot resolve coding environment for non-coding/SQL question type: ${question.questionType}`);
     }
     const problemType = question.codingConfig?.problemType?.toUpperCase() || 'ALGORITHM';
 

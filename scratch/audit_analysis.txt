@@ -1,0 +1,36 @@
+=== NON-FREE CREDIT LEDGER ENTRIES (REAL USERS) ===
+Real users non-FREE entries: 4
+{"id":1785,"userId":"user_superadmin_pawankhot","amount":10,"source":"PURCHASED","transactionType":"GRANT","assessmentId":null,"questionId":null,"description":"AI Credit Pack Purchase: pack_10 (ord_1790284902024_unuc8)","createdAt":"2026-09-24T21:49:38.515Z","is_test":0}
+{"id":1786,"userId":"user_superadmin_pawankhot","amount":10,"source":"PURCHASED","transactionType":"GRANT","assessmentId":null,"questionId":null,"description":"AI Credit Pack Purchase: pack_10 (ord_1790286286068_7sxzf)","createdAt":"2026-09-24T21:49:38.540Z","is_test":0}
+{"id":1875,"userId":"user_superadmin_pawankhot","amount":50,"source":"PREMIUM","transactionType":"GRANT","assessmentId":null,"questionId":null,"description":"Premium Billing Period AI Allowance (50 credits)","createdAt":"2026-09-24T22:07:31.222Z","is_test":0}
+{"id":1973,"userId":"user_student_pawankhot127","amount":65,"source":"PREMIUM","transactionType":"GRANT","assessmentId":null,"questionId":null,"description":"Premium Billing Period AI Allowance (65 credits)","createdAt":"2026-09-24T22:19:59.490Z","is_test":0}
+
+=== PLUS TEST SELECTIONS (REAL USERS) ===
+Count: 0
+
+=== CREDIT LEDGER SUMMARY ===
+Total entries: 91
+FREE source: 63
+PURCHASED source: 16
+PREMIUM source: 12
+
+=== PLUS SELECTIONS SUMMARY ===
+Total: 242
+Real users: 0
+Test users: 242
+
+=== PAYMENT ORDER SUMMARY ===
+Total: 5
+Real user orders: 5
+{"id":"ord_1789930355698_b82ry","userId":"user_student_pawankhot127","type":"ASSESSMENT","amount":2900,"status":"CREATED","razorpayOrderId":"order_1789930355699_bgidm"}
+{"id":"ord_1790284902024_unuc8","userId":"user_superadmin_pawankhot","type":"AI_CREDIT_PACK","amount":4900,"status":"CAPTURED","razorpayOrderId":"order_Tg1Kt6IB6RrPga"}
+{"id":"ord_1790286286068_7sxzf","userId":"user_superadmin_pawankhot","type":"AI_CREDIT_PACK","amount":4900,"status":"CAPTURED","razorpayOrderId":"order_Tg1jFnJ6W6RKMu"}
+{"id":"ord_sub_1790286864391_58njb","userId":"user_superadmin_pawankhot","type":"SUBSCRIPTION","amount":19900,"status":"CAPTURED","razorpayOrderId":"order_Tg1tR3uWCGPvnV"}
+{"id":"ord_sub_1790287874712_cm9nc","userId":"user_student_pawankhot127","type":"SUBSCRIPTION","amount":34900,"status":"CAPTURED","razorpayOrderId":"order_Tg2BDqfDIz2LiW"}
+
+=== SUBSCRIPTION SUMMARY ===
+Total: 4
+{"id":"sub_1790019637970_q8lvq","userId":"user_superadmin_pawankhot","plan":"PLUS","status":"active","razorpayPlanId":"plan_premium_monthly"}
+{"id":"sub_1790287651203_752ns","userId":"user_superadmin_pawankhot","plan":"FREE","status":"ACTIVE","razorpayPlanId":"plan_plus"}
+{"id":"sub_1790288399474_vdfi","userId":"user_student_pawankhot127","plan":"PRO","status":"active","razorpayPlanId":null}
+{"id":"sub_1790288399475_3me56","userId":"user_student_pawankhot127","plan":"FREE","status":"ACTIVE","razorpayPlanId":"plan_pro"}

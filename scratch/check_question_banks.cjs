@@ -1,0 +1,38 @@
+const { quantQuestions } = require('../src/data/questionBank/quant');
+const { logicalQuestions } = require('../src/data/questionBank/logical');
+const { verbalQuestions } = require('../src/data/questionBank/verbal');
+const { diQuestions } = require('../src/data/questionBank/di');
+const { pseudocodeQuestions } = require('../src/data/questionBank/pseudocode');
+const { accentureQuestions } = require('../src/data/questionBank/accenture');
+const { cognizantQuestions } = require('../src/data/questionBank/cognizant');
+const { infosysQuestions } = require('../src/data/questionBank/infosys');
+const { tcsAdvancedQuestions } = require('../src/data/questionBank/tcsAdvanced');
+const { tcsCodingProblems } = require('../src/data/questionBank/tcsCoding');
+const { codingMockQuestions } = require('../src/data/questionBank/codingMock');
+const { wiproQuestions } = require('../src/data/questionBank/wipro');
+const { dsaQuestions } = require('../src/data/questionBank/dsa');
+const { sqlQuestions } = require('../src/data/questionBank/sql');
+const { progFundamentalsQuestions } = require('../src/data/questionBank/progFundamentals');
+const { codingOutputQuestions } = require('../src/data/questionBank/codingOutput');
+const { coreCsQuestions } = require('../src/data/questionBank/coreCs');
+
+console.log('quantQuestions:', quantQuestions.length);
+console.log('logicalQuestions:', logicalQuestions.length);
+console.log('verbalQuestions:', verbalQuestions.length);
+console.log('diQuestions:', diQuestions.length);
+console.log('pseudocodeQuestions:', pseudocodeQuestions.length);
+console.log('accentureQuestions:', accentureQuestions.length);
+console.log('cognizantQuestions:', cognizantQuestions.length);
+console.log('infosysQuestions:', infosysQuestions.length);
+console.log('tcsAdvancedQuestions:', tcsAdvancedQuestions.length);
+console.log('tcsCodingProblems:', tcsCodingProblems.length);
+console.log('codingMockQuestions:', codingMockQuestions.length);
+console.log('wiproQuestions:', wiproQuestions.length);
+console.log('dsaQuestions:', dsaQuestions.length);
+console.log('sqlQuestions:', sqlQuestions.length);
+console.log('progFundamentalsQuestions:', progFundamentalsQuestions.length);
+console.log('codingOutputQuestions:', codingOutputQuestions.length);
+console.log('coreCsQuestions:', coreCsQuestions.length);
+
+const total = quantQuestions.length + logicalQuestions.length + verbalQuestions.length + diQuestions.length + pseudocodeQuestions.length + accentureQuestions.length + cognizantQuestions.length + infosysQuestions.length + tcsAdvancedQuestions.length + tcsCodingProblems.length + codingMockQuestions.length + wiproQuestions.length + dsaQuestions.length + sqlQuestions.length + progFundamentalsQuestions.length + codingOutputQuestions.length + coreCsQuestions.length;
+console.log('TOTAL CANONICAL QUESTIONS:', total);

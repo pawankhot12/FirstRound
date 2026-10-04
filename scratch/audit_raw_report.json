@@ -1,0 +1,241 @@
+{
+  "auth": {
+    "loginRegisterStatus": 403
+  },
+  "dashboard": {},
+  "testHub": {
+    "totalTests": 17,
+    "tests": [
+      {
+        "id": "cat_foundation_quant",
+        "title": "Quantitative Aptitude",
+        "category": "foundation",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_foundation_logical",
+        "title": "Logical Reasoning",
+        "category": "foundation",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_foundation_verbal",
+        "title": "Verbal Ability",
+        "category": "foundation",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_foundation_di",
+        "title": "Data Interpretation",
+        "category": "foundation",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_foundation_pseudocode",
+        "title": "Pseudocode & Programming Logic",
+        "category": "foundation",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_company_tcs_foundation",
+        "title": "TCS NQT Foundation Mock",
+        "category": "company",
+        "totalQuestions": 65
+      },
+      {
+        "id": "cat_company_tcs",
+        "title": "TCS NQT Advanced Mock",
+        "category": "company",
+        "totalQuestions": 22
+      },
+      {
+        "id": "cat_company_infosys",
+        "title": "Infosys Pattern Mock",
+        "category": "company",
+        "totalQuestions": 54
+      },
+      {
+        "id": "cat_company_accenture",
+        "title": "Accenture Pattern Mock",
+        "category": "company",
+        "totalQuestions": 90
+      },
+      {
+        "id": "cat_company_wipro",
+        "title": "Wipro Pattern Mock",
+        "category": "company",
+        "totalQuestions": 48
+      },
+      {
+        "id": "cat_company_cognizant",
+        "title": "Cognizant Pattern Mock",
+        "category": "company",
+        "totalQuestions": 80
+      },
+      {
+        "id": "cat_coding_dsa",
+        "title": "DSA & Problem Solving",
+        "category": "coding",
+        "totalQuestions": 30
+      },
+      {
+        "id": "cat_coding_sql",
+        "title": "SQL Assessment",
+        "category": "coding",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_coding_prog_fundamentals",
+        "title": "Programming Fundamentals",
+        "category": "coding",
+        "totalQuestions": 25
+      },
+      {
+        "id": "cat_coding_output_debug",
+        "title": "Coding Output & Debugging",
+        "category": "coding",
+        "totalQuestions": 20
+      },
+      {
+        "id": "cat_coding_core_cs",
+        "title": "Core CS Fundamentals",
+        "category": "coding",
+        "totalQuestions": 35
+      },
+      {
+        "id": "cat_coding_mock_01",
+        "title": "FirstRound Coding & Technical Mock",
+        "category": "coding",
+        "totalQuestions": 25
+      }
+    ]
+  },
+  "exam": {},
+  "practice": {},
+  "xp": {},
+  "result": {},
+  "history": {},
+  "revisionVault": {
+    "status": 200
+  },
+  "league": {
+    "currentLeagueRes": {
+      "isParticipant": false,
+      "cohortStatus": "ACTIVE",
+      "activeSeason": {
+        "id": "season_2026_w37",
+        "status": "ACTIVE",
+        "startTime": "2026-09-14T00:00:00.000Z",
+        "endTime": "2026-09-21T00:00:00.000Z"
+      },
+      "seasonStart": "2026-09-14T00:00:00.000Z",
+      "seasonEnd": "2026-09-21T00:00:00.000Z",
+      "timeRemainingSeconds": 279983,
+      "userLeague": "Bronze",
+      "userGroup": null,
+      "cohortSize": 0,
+      "currentRank": null,
+      "weeklyXp": 0,
+      "movement": "STAY",
+      "promotionZone": {
+        "promotionCutoffRank": 8,
+        "demotionStartRank": 33,
+        "isPromoting": false,
+        "isStaying": true,
+        "isDemoting": false,
+        "isPending": false
+      },
+      "leagueBoundaries": {
+        "isBronze": true,
+        "isEliteMaster": false,
+        "canPromote": true,
+        "canDemote": false
+      },
+      "standings": []
+    }
+  },
+  "nationalRanking": {
+    "nationalRes": {
+      "userExactRank": null,
+      "userPercentile": null,
+      "isUnranked": true,
+      "totalCandidates": 0,
+      "standings": []
+    }
+  },
+  "careerTracks": {
+    "count": 0
+  },
+  "profile": {},
+  "aiAssistant": {
+    "status": 403,
+    "data": {
+      "error": "CSRF validation failed: missing custom header or cross-origin mismatch"
+    }
+  },
+  "notifications": {},
+  "admin": {},
+  "coding": {},
+  "database": {
+    "tablesCount": 24,
+    "tableNames": [
+      "users",
+      "companies",
+      "tests",
+      "questions",
+      "mega_events",
+      "test_attempts",
+      "attempt_responses",
+      "sqlite_sequence",
+      "bookmarks",
+      "notifications",
+      "coding_submissions",
+      "test_user_history",
+      "weekly_seasons",
+      "weekly_standings",
+      "roles",
+      "career_tracks",
+      "track_stages",
+      "track_items",
+      "assessment_roles",
+      "assessment_companies",
+      "track_company_milestones",
+      "user_track_progress",
+      "user_track_item_progress",
+      "assessment_questions"
+    ],
+    "totalUsers": 3,
+    "realUsersCount": 3,
+    "testUsersCount": 0,
+    "realUsers": [
+      {
+        "id": "user_1788874380714_kmibk",
+        "email": "pawankhot9@gmail.com",
+        "name": "Pawan Khot",
+        "role": "super_admin"
+      },
+      {
+        "id": "user_1789487767693_papv1",
+        "email": "akhot5779@gmail.com",
+        "name": "Akash Khot",
+        "role": "student"
+      },
+      {
+        "id": "user_1789561036714_3zwtm",
+        "email": "pawan.khot1272004@gmail.com",
+        "name": "Pawan Khot",
+        "role": "student"
+      }
+    ]
+  },
+  "security": {},
+  "issues": [
+    {
+      "severity": "CRITICAL",
+      "area": "SECURITY",
+      "file": "server.ts",
+      "description": "Admin overview endpoint /api/admin/overview allows unauthenticated access!",
+      "repro": "GET /api/admin/overview with no headers"
+    }
+  ]
+}

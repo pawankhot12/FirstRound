@@ -7,7 +7,6 @@ import {
   CheckCircle2,
   Clock,
   ExternalLink,
-  GraduationCap,
   Sparkles,
   Target,
   User,
@@ -58,16 +57,20 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState(user.name || '');
-  const [college, setCollege] = useState(user.college || '');
   const [targetCompany, setTargetCompany] = useState(user.targetCompany || '');
   const [targetRole, setTargetRole] = useState(user.targetRole || '');
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
 
+  React.useEffect(() => {
+    setName(user.name || '');
+    setTargetCompany(user.targetCompany || '');
+    setTargetRole(user.targetRole || '');
+  }, [user.name, user.targetCompany, user.targetRole]);
+
   // Derive initial values on cancel
   const handleCancel = () => {
     setName(user.name || '');
-    setCollege(user.college || '');
     setTargetCompany(user.targetCompany || '');
     setTargetRole(user.targetRole || '');
     setIsEditing(false);
@@ -82,7 +85,6 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
     try {
       await onUpdateUser({
         name: name.trim(),
-        college: college.trim(),
         targetCompany: targetCompany.trim(),
         targetRole: targetRole.trim(),
       });
@@ -116,8 +118,12 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
         <div className="p-6 bg-primary border-b border-primary-dark text-white flex items-start justify-between relative overflow-hidden">
           <div className="flex items-center gap-4 relative z-10">
             {/* Avatar */}
-            <div className="w-14 h-14 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl font-extrabold shadow-md shrink-0">
-              {initial}
+            <div className="w-14 h-14 rounded-2xl bg-amber-400 text-slate-950 flex items-center justify-center text-xl font-extrabold shadow-md shrink-0 overflow-hidden">
+              {(user.avatarUrl || user.avatar) ? (
+                <img src={user.avatarUrl || user.avatar} alt={user.name || 'Candidate'} className="w-full h-full object-cover" />
+              ) : (
+                <span>{initial}</span>
+              )}
             </div>
 
             <div className="space-y-1 min-w-0">
@@ -131,15 +137,6 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               </div>
 
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-300">
-                <p className="flex items-center gap-1.5 truncate">
-                  <GraduationCap className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                  <span className={user.college ? 'text-slate-200 font-medium' : 'text-slate-400 italic'}>
-                    {user.college || 'College not added'}
-                  </span>
-                </p>
-
-                <span className="text-text-secondary hidden sm:inline">•</span>
-
                 <p className="flex items-center gap-1.5 truncate">
                   <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                   <span className={user.targetCompany ? 'text-slate-200 font-medium' : 'text-slate-400 italic'}>
@@ -224,7 +221,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                 <span className="text-[11px] text-slate-400 font-medium">All fields optional except Name</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
                     Full Name <span className="text-rose-500">*</span>
@@ -242,20 +239,6 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
 
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
-                    College Name
-                  </label>
-                  <input
-                    id="profile-edit-college-input"
-                    type="text"
-                    value={college}
-                    onChange={(e) => setCollege(e.target.value)}
-                    placeholder="e.g. PICT Pune / IIT Bombay"
-                    className="w-full px-3 py-2 bg-surface border border-border rounded-xl text-xs text-text-primary focus:outline-none focus:border-primary shadow-xs"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">
                     Target Company
                   </label>
                   <select
@@ -264,7 +247,7 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                     onChange={(e) => setTargetCompany(e.target.value)}
                     className="w-full px-3 py-2 bg-surface border border-border rounded-xl text-xs text-text-primary focus:outline-none focus:border-primary shadow-xs"
                   >
-                    <option value="">Select target company...</option>
+                    <option value="">Select target company (optional)...</option>
                     {TARGET_COMPANIES.map((comp) => (
                       <option key={comp} value={comp}>
                         {comp}
@@ -324,7 +307,9 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
               <div className="space-y-0.5">
                 <p className="font-bold text-text-primary">Placement Target Details</p>
                 <p className="text-text-muted text-[11px]">
-                  Targeting {user.targetCompany || 'General Placement'} {user.targetRole ? `as ${user.targetRole}` : ''}
+                  {user.targetCompany || user.targetRole
+                    ? `Targeting ${user.targetCompany || 'General Placement'} ${user.targetRole ? `as ${user.targetRole}` : ''}`
+                    : 'Set your target company and role below.'}
                 </p>
               </div>
               <button

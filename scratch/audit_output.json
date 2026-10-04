@@ -1,0 +1,2963 @@
+{
+  "paymentOrders": [
+    {
+      "id": "ord_1789930355698_b82ry",
+      "userId": "user_student_pawankhot127",
+      "productType": "ASSESSMENT",
+      "productId": "cat_company_tcs",
+      "amount": 2900,
+      "razorpayOrderId": "order_1789930355699_bgidm",
+      "razorpayPaymentId": null,
+      "status": "CREATED",
+      "createdAt": "2026-09-20T18:52:35.699Z",
+      "is_test": 0
+    },
+    {
+      "id": "ord_1790284902024_unuc8",
+      "userId": "user_superadmin_pawankhot",
+      "productType": "AI_CREDIT_PACK",
+      "productId": "pack_10",
+      "amount": 4900,
+      "razorpayOrderId": "order_Tg1Kt6IB6RrPga",
+      "razorpayPaymentId": "pay_Tg1S2emJaIjuO0",
+      "status": "CAPTURED",
+      "createdAt": "2026-09-24T21:21:42.357Z",
+      "is_test": 0
+    },
+    {
+      "id": "ord_1790286286068_7sxzf",
+      "userId": "user_superadmin_pawankhot",
+      "productType": "AI_CREDIT_PACK",
+      "productId": "pack_10",
+      "amount": 4900,
+      "razorpayOrderId": "order_Tg1jFnJ6W6RKMu",
+      "razorpayPaymentId": "pay_Tg1jion9z4AOvU",
+      "status": "CAPTURED",
+      "createdAt": "2026-09-24T21:44:46.310Z",
+      "is_test": 0
+    },
+    {
+      "id": "ord_sub_1790286864391_58njb",
+      "userId": "user_superadmin_pawankhot",
+      "productType": "SUBSCRIPTION",
+      "productId": "PLUS",
+      "amount": 19900,
+      "razorpayOrderId": "order_Tg1tR3uWCGPvnV",
+      "razorpayPaymentId": "pay_Tg1tKtY6xI2SqM",
+      "status": "CAPTURED",
+      "createdAt": "2026-09-24T21:54:24.648Z",
+      "is_test": 0
+    },
+    {
+      "id": "ord_sub_1790287874712_cm9nc",
+      "userId": "user_student_pawankhot127",
+      "productType": "SUBSCRIPTION",
+      "productId": "PRO",
+      "amount": 34900,
+      "razorpayOrderId": "order_Tg2BDqfDIz2LiW",
+      "razorpayPaymentId": "pay_Tg2BThv4JiKMRu",
+      "status": "CAPTURED",
+      "createdAt": "2026-09-24T22:11:14.933Z",
+      "is_test": 0
+    }
+  ],
+  "premiumSubscriptions": [
+    {
+      "id": "sub_1790019637970_q8lvq",
+      "userId": "user_superadmin_pawankhot",
+      "provider": "RAZORPAY",
+      "razorpaySubscriptionId": "sub_1790019637969_wn7h9",
+      "razorpayPlanId": "plan_premium_monthly",
+      "status": "active",
+      "currentPeriodStart": "2026-09-24T22:07:31.202Z",
+      "currentPeriodEnd": "2026-10-24T22:07:31.202Z",
+      "cancelledAt": null,
+      "endedAt": null,
+      "createdAt": "2026-09-21T19:40:37.970Z",
+      "updatedAt": "2026-09-24T22:07:31.202Z",
+      "is_test": 0,
+      "plan": "PLUS",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    },
+    {
+      "id": "sub_1790287651203_752ns",
+      "userId": "user_superadmin_pawankhot",
+      "provider": "RAZORPAY",
+      "razorpaySubscriptionId": "order_Tg1tR3uWCGPvnV",
+      "razorpayPlanId": "plan_plus",
+      "status": "ACTIVE",
+      "currentPeriodStart": null,
+      "currentPeriodEnd": null,
+      "cancelledAt": null,
+      "endedAt": null,
+      "createdAt": "2026-09-24T22:07:31.203Z",
+      "updatedAt": "2026-09-24T22:07:31.203Z",
+      "is_test": 0,
+      "plan": "FREE",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    },
+    {
+      "id": "sub_1790288399474_vdfi",
+      "userId": "user_student_pawankhot127",
+      "provider": "RAZORPAY",
+      "razorpaySubscriptionId": null,
+      "razorpayPlanId": null,
+      "status": "active",
+      "currentPeriodStart": "2026-09-24T22:19:59.473Z",
+      "currentPeriodEnd": "2026-10-24T22:19:59.473Z",
+      "cancelledAt": null,
+      "endedAt": null,
+      "createdAt": "2026-09-24T22:19:59.474Z",
+      "updatedAt": "2026-09-24T22:19:59.474Z",
+      "is_test": 0,
+      "plan": "PRO",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    },
+    {
+      "id": "sub_1790288399475_3me56",
+      "userId": "user_student_pawankhot127",
+      "provider": "RAZORPAY",
+      "razorpaySubscriptionId": "order_Tg2BDqfDIz2LiW",
+      "razorpayPlanId": "plan_pro",
+      "status": "ACTIVE",
+      "currentPeriodStart": null,
+      "currentPeriodEnd": null,
+      "cancelledAt": null,
+      "endedAt": null,
+      "createdAt": "2026-09-24T22:19:59.475Z",
+      "updatedAt": "2026-09-24T22:19:59.475Z",
+      "is_test": 0,
+      "plan": "FREE",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    }
+  ],
+  "creditLedger": [
+    {
+      "id": 1,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T19:31:32.910Z",
+      "is_test": 0
+    },
+    {
+      "id": 2,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_01",
+      "description": "Deep AI Session for question q_test_monetize_01",
+      "createdAt": "2026-09-18T19:31:33.164Z",
+      "is_test": 0
+    },
+    {
+      "id": 3,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_02",
+      "description": "Deep AI Session for question q_test_monetize_02",
+      "createdAt": "2026-09-18T19:31:38.264Z",
+      "is_test": 0
+    },
+    {
+      "id": 4,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_03",
+      "description": "Deep AI Session for question q_test_monetize_03",
+      "createdAt": "2026-09-18T19:31:40.758Z",
+      "is_test": 0
+    },
+    {
+      "id": 5,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_04",
+      "description": "Deep AI Session for question q_test_monetize_04",
+      "createdAt": "2026-09-18T19:31:42.949Z",
+      "is_test": 0
+    },
+    {
+      "id": 6,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_05",
+      "description": "Deep AI Session for question q_test_monetize_05",
+      "createdAt": "2026-09-18T19:31:45.521Z",
+      "is_test": 0
+    },
+    {
+      "id": 7,
+      "userId": "test_monetize_user_1789759892871",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_test_monetize_06",
+      "description": "Deep AI Session for question q_test_monetize_06",
+      "createdAt": "2026-09-18T19:31:48.003Z",
+      "is_test": 0
+    },
+    {
+      "id": 87,
+      "userId": "phase_d_free_1789762864914",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T20:21:04.936Z",
+      "is_test": 0
+    },
+    {
+      "id": 88,
+      "userId": "phase_d_free_1789762905226",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T20:21:45.257Z",
+      "is_test": 0
+    },
+    {
+      "id": 89,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T20:21:45.267Z",
+      "is_test": 0
+    },
+    {
+      "id": 90,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": 100,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (100 credits)",
+      "createdAt": "2026-09-18T20:21:45.267Z",
+      "is_test": 0
+    },
+    {
+      "id": 91,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": 5,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Pack purchase: 5 credits",
+      "createdAt": "2026-09-18T20:21:45.221Z",
+      "is_test": 0
+    },
+    {
+      "id": 92,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_1",
+      "description": "Deep AI Session for question q_prio_free_1",
+      "createdAt": "2026-09-18T20:21:45.328Z",
+      "is_test": 0
+    },
+    {
+      "id": 93,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_2",
+      "description": "Deep AI Session for question q_prio_free_2",
+      "createdAt": "2026-09-18T20:21:47.257Z",
+      "is_test": 0
+    },
+    {
+      "id": 94,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_3",
+      "description": "Deep AI Session for question q_prio_free_3",
+      "createdAt": "2026-09-18T20:21:49.163Z",
+      "is_test": 0
+    },
+    {
+      "id": 95,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_4",
+      "description": "Deep AI Session for question q_prio_free_4",
+      "createdAt": "2026-09-18T20:21:51.205Z",
+      "is_test": 0
+    },
+    {
+      "id": 96,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_5",
+      "description": "Deep AI Session for question q_prio_free_5",
+      "createdAt": "2026-09-18T20:21:53.401Z",
+      "is_test": 0
+    },
+    {
+      "id": 97,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_6",
+      "description": "Deep AI Session for question q_prio_free_6",
+      "createdAt": "2026-09-18T20:21:55.436Z",
+      "is_test": 0
+    },
+    {
+      "id": 98,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_1",
+      "description": "Deep AI Session for question q_prio_purchased_1",
+      "createdAt": "2026-09-18T20:21:57.586Z",
+      "is_test": 0
+    },
+    {
+      "id": 99,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_2",
+      "description": "Deep AI Session for question q_prio_purchased_2",
+      "createdAt": "2026-09-18T20:21:59.517Z",
+      "is_test": 0
+    },
+    {
+      "id": 100,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_3",
+      "description": "Deep AI Session for question q_prio_purchased_3",
+      "createdAt": "2026-09-18T20:22:01.764Z",
+      "is_test": 0
+    },
+    {
+      "id": 101,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_4",
+      "description": "Deep AI Session for question q_prio_purchased_4",
+      "createdAt": "2026-09-18T20:22:03.885Z",
+      "is_test": 0
+    },
+    {
+      "id": 102,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_5",
+      "description": "Deep AI Session for question q_prio_purchased_5",
+      "createdAt": "2026-09-18T20:22:05.825Z",
+      "is_test": 0
+    },
+    {
+      "id": 103,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_1",
+      "description": "Deep AI Session for question q_prio_prem_1",
+      "createdAt": "2026-09-18T20:22:08.079Z",
+      "is_test": 0
+    },
+    {
+      "id": 104,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_2",
+      "description": "Deep AI Session for question q_prio_prem_2",
+      "createdAt": "2026-09-18T20:22:10.173Z",
+      "is_test": 0
+    },
+    {
+      "id": 105,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_3",
+      "description": "Deep AI Session for question q_prio_prem_3",
+      "createdAt": "2026-09-18T20:22:12.275Z",
+      "is_test": 0
+    },
+    {
+      "id": 106,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": 10,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "User bought 10 pack",
+      "createdAt": "2026-09-18T20:21:45.221Z",
+      "is_test": 0
+    },
+    {
+      "id": 107,
+      "userId": "phase_d_prem_1789762905264",
+      "amount": 100,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (100 credits)",
+      "createdAt": "2026-09-18T20:22:16.595Z",
+      "is_test": 0
+    },
+    {
+      "id": 144,
+      "userId": "phase_d_free_1789764010601",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T20:40:10.624Z",
+      "is_test": 0
+    },
+    {
+      "id": 145,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-18T20:40:10.629Z",
+      "is_test": 0
+    },
+    {
+      "id": 146,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": 100,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (100 credits)",
+      "createdAt": "2026-09-18T20:40:10.629Z",
+      "is_test": 0
+    },
+    {
+      "id": 147,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": 5,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Pack purchase: 5 credits",
+      "createdAt": "2026-09-18T20:40:10.598Z",
+      "is_test": 0
+    },
+    {
+      "id": 148,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_1",
+      "description": "Deep AI Session for question q_prio_free_1",
+      "createdAt": "2026-09-18T20:40:10.665Z",
+      "is_test": 0
+    },
+    {
+      "id": 149,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_2",
+      "description": "Deep AI Session for question q_prio_free_2",
+      "createdAt": "2026-09-18T20:40:12.529Z",
+      "is_test": 0
+    },
+    {
+      "id": 150,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_3",
+      "description": "Deep AI Session for question q_prio_free_3",
+      "createdAt": "2026-09-18T20:40:14.289Z",
+      "is_test": 0
+    },
+    {
+      "id": 151,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_4",
+      "description": "Deep AI Session for question q_prio_free_4",
+      "createdAt": "2026-09-18T20:40:16.076Z",
+      "is_test": 0
+    },
+    {
+      "id": 152,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_5",
+      "description": "Deep AI Session for question q_prio_free_5",
+      "createdAt": "2026-09-18T20:40:18.098Z",
+      "is_test": 0
+    },
+    {
+      "id": 153,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_free_6",
+      "description": "Deep AI Session for question q_prio_free_6",
+      "createdAt": "2026-09-18T20:40:20.185Z",
+      "is_test": 0
+    },
+    {
+      "id": 154,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_1",
+      "description": "Deep AI Session for question q_prio_purchased_1",
+      "createdAt": "2026-09-18T20:40:22.180Z",
+      "is_test": 0
+    },
+    {
+      "id": 155,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_2",
+      "description": "Deep AI Session for question q_prio_purchased_2",
+      "createdAt": "2026-09-18T20:40:24.335Z",
+      "is_test": 0
+    },
+    {
+      "id": 156,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_3",
+      "description": "Deep AI Session for question q_prio_purchased_3",
+      "createdAt": "2026-09-18T20:40:26.763Z",
+      "is_test": 0
+    },
+    {
+      "id": 157,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_4",
+      "description": "Deep AI Session for question q_prio_purchased_4",
+      "createdAt": "2026-09-18T20:40:29.091Z",
+      "is_test": 0
+    },
+    {
+      "id": 158,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PURCHASED",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_purchased_5",
+      "description": "Deep AI Session for question q_prio_purchased_5",
+      "createdAt": "2026-09-18T20:40:30.904Z",
+      "is_test": 0
+    },
+    {
+      "id": 159,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_1",
+      "description": "Deep AI Session for question q_prio_prem_1",
+      "createdAt": "2026-09-18T20:40:33.066Z",
+      "is_test": 0
+    },
+    {
+      "id": 160,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_2",
+      "description": "Deep AI Session for question q_prio_prem_2",
+      "createdAt": "2026-09-18T20:40:35.229Z",
+      "is_test": 0
+    },
+    {
+      "id": 161,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": -1,
+      "source": "PREMIUM",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_practice",
+      "questionId": "q_prio_prem_3",
+      "description": "Deep AI Session for question q_prio_prem_3",
+      "createdAt": "2026-09-18T20:40:36.917Z",
+      "is_test": 0
+    },
+    {
+      "id": 162,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": 10,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "User bought 10 pack",
+      "createdAt": "2026-09-18T20:40:10.598Z",
+      "is_test": 0
+    },
+    {
+      "id": 163,
+      "userId": "phase_d_prem_1789764010628",
+      "amount": 100,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (100 credits)",
+      "createdAt": "2026-09-18T20:40:41.246Z",
+      "is_test": 0
+    },
+    {
+      "id": 314,
+      "userId": "ux_test_user_1789814803716",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-19T10:46:43.758Z",
+      "is_test": 0
+    },
+    {
+      "id": 315,
+      "userId": "ux_test_user_1789814803716",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_1",
+      "description": "Deep AI Session for question q_test_1",
+      "createdAt": "2026-09-19T10:46:43.769Z",
+      "is_test": 0
+    },
+    {
+      "id": 316,
+      "userId": "ux_test_user_1789814803716",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_2",
+      "description": "Deep AI Session for question q_test_2",
+      "createdAt": "2026-09-19T10:47:13.164Z",
+      "is_test": 0
+    },
+    {
+      "id": 317,
+      "userId": "ux_test_user_1789814803716",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:47:23.061Z",
+      "is_test": 0
+    },
+    {
+      "id": 318,
+      "userId": "ux_test_user_1789814803716",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_2",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:47:26.327Z",
+      "is_test": 0
+    },
+    {
+      "id": 319,
+      "userId": "ux_test_user_1789814885054",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-19T10:48:05.098Z",
+      "is_test": 0
+    },
+    {
+      "id": 320,
+      "userId": "ux_test_user_1789814885054",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_1",
+      "description": "Deep AI Session for question q_test_1",
+      "createdAt": "2026-09-19T10:48:05.109Z",
+      "is_test": 0
+    },
+    {
+      "id": 321,
+      "userId": "ux_test_user_1789814885054",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_2",
+      "description": "Deep AI Session for question q_test_2",
+      "createdAt": "2026-09-19T10:48:41.105Z",
+      "is_test": 0
+    },
+    {
+      "id": 322,
+      "userId": "ux_test_user_1789814885054",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:53:53.745Z",
+      "is_test": 0
+    },
+    {
+      "id": 323,
+      "userId": "ux_test_user_1789814885054",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_2",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:53:56.929Z",
+      "is_test": 0
+    },
+    {
+      "id": 324,
+      "userId": "ux_test_user_1789815309703",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-19T10:55:09.748Z",
+      "is_test": 0
+    },
+    {
+      "id": 325,
+      "userId": "ux_test_user_1789815309703",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_1",
+      "description": "Deep AI Session for question q_test_1",
+      "createdAt": "2026-09-19T10:55:09.757Z",
+      "is_test": 0
+    },
+    {
+      "id": 326,
+      "userId": "ux_test_user_1789815309703",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_2",
+      "description": "Deep AI Session for question q_test_2",
+      "createdAt": "2026-09-19T10:55:45.271Z",
+      "is_test": 0
+    },
+    {
+      "id": 327,
+      "userId": "ux_test_user_1789815309703",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_1",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:55:54.290Z",
+      "is_test": 0
+    },
+    {
+      "id": 328,
+      "userId": "ux_test_user_1789815309703",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "test_series_ux_2",
+      "questionId": "q_test_3",
+      "description": "Deep AI Session for question q_test_3",
+      "createdAt": "2026-09-19T10:55:59.136Z",
+      "is_test": 0
+    },
+    {
+      "id": 673,
+      "userId": "user_superadmin_pawankhot",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-20T11:47:02.940Z",
+      "is_test": 0
+    },
+    {
+      "id": 721,
+      "userId": "user_student_pawankhot127",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-20T12:28:03.630Z",
+      "is_test": 0
+    },
+    {
+      "id": 729,
+      "userId": "user_student_akhot5779",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-20T17:37:11.168Z",
+      "is_test": 0
+    },
+    {
+      "id": 730,
+      "userId": "user_student_akhot5779",
+      "amount": 1,
+      "source": "FREE",
+      "transactionType": "ADMIN_ADJUST",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Admin grant",
+      "createdAt": "2026-09-20T17:37:39.403Z",
+      "is_test": 0
+    },
+    {
+      "id": 765,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_tcs_foundation",
+      "questionId": "q_quant_001",
+      "description": "Deep AI Session for question q_quant_001",
+      "createdAt": "2026-09-21T05:01:17.622Z",
+      "is_test": 0
+    },
+    {
+      "id": 766,
+      "userId": "user_student_pawankhot127",
+      "amount": 5,
+      "source": "FREE",
+      "transactionType": "ADMIN_GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Admin grant by user_superadmin_pawankhot: Admin grant",
+      "createdAt": "2026-09-21T16:42:06.424Z",
+      "is_test": 0
+    },
+    {
+      "id": 767,
+      "userId": "user_student_pawankhot127",
+      "amount": 1,
+      "source": "FREE",
+      "transactionType": "ADMIN_GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Admin grant by user_superadmin_pawankhot: Admin grant",
+      "createdAt": "2026-09-21T16:42:20.004Z",
+      "is_test": 0
+    },
+    {
+      "id": 768,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_quant_001",
+      "description": "Deep AI Session for question q_quant_001",
+      "createdAt": "2026-09-21T17:06:26.154Z",
+      "is_test": 0
+    },
+    {
+      "id": 769,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant",
+      "questionId": "q_quant_002",
+      "description": "Deep AI Session for question q_quant_002",
+      "createdAt": "2026-09-21T17:07:05.602Z",
+      "is_test": 0
+    },
+    {
+      "id": 770,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_coding_sql",
+      "questionId": "q_sql_001",
+      "description": "Deep AI Session for question q_sql_001",
+      "createdAt": "2026-09-21T17:22:38.465Z",
+      "is_test": 0
+    },
+    {
+      "id": 771,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_coding_sql",
+      "questionId": "q_sql_019",
+      "description": "Deep AI Session for question q_sql_019",
+      "createdAt": "2026-09-21T17:55:21.971Z",
+      "is_test": 0
+    },
+    {
+      "id": 772,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_coding_sql",
+      "questionId": "q_sql_014",
+      "description": "Deep AI Session for question q_sql_014",
+      "createdAt": "2026-09-21T17:58:46.382Z",
+      "is_test": 0
+    },
+    {
+      "id": 773,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "q_wipro_001",
+      "description": "Deep AI Session for question q_wipro_001",
+      "createdAt": "2026-09-21T18:45:49.547Z",
+      "is_test": 0
+    },
+    {
+      "id": 774,
+      "userId": "user_student_pawankhot127",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "q_wipro_002",
+      "description": "Deep AI Session for question q_wipro_002",
+      "createdAt": "2026-09-21T18:46:30.499Z",
+      "is_test": 0
+    },
+    {
+      "id": 775,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_0",
+      "description": "Deep AI Session for question exhaust_q_0",
+      "createdAt": "2026-09-21T18:49:25.918Z",
+      "is_test": 0
+    },
+    {
+      "id": 776,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_1",
+      "description": "Deep AI Session for question exhaust_q_1",
+      "createdAt": "2026-09-21T18:49:28.858Z",
+      "is_test": 0
+    },
+    {
+      "id": 777,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_2",
+      "description": "Deep AI Session for question exhaust_q_2",
+      "createdAt": "2026-09-21T18:49:32.072Z",
+      "is_test": 0
+    },
+    {
+      "id": 778,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_3",
+      "description": "Deep AI Session for question exhaust_q_3",
+      "createdAt": "2026-09-21T18:49:34.872Z",
+      "is_test": 0
+    },
+    {
+      "id": 779,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_4",
+      "description": "Deep AI Session for question exhaust_q_4",
+      "createdAt": "2026-09-21T18:49:37.394Z",
+      "is_test": 0
+    },
+    {
+      "id": 780,
+      "userId": "user_student_akhot5779",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_company_wipro",
+      "questionId": "exhaust_q_5",
+      "description": "Deep AI Session for question exhaust_q_5",
+      "createdAt": "2026-09-21T18:49:40.247Z",
+      "is_test": 0
+    },
+    {
+      "id": 781,
+      "userId": "user_superadmin_pawankhot",
+      "amount": 5,
+      "source": "FREE",
+      "transactionType": "ADMIN_GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Admin grant by user_superadmin_pawankhot: Admin grant",
+      "createdAt": "2026-09-21T19:01:00.168Z",
+      "is_test": 0
+    },
+    {
+      "id": 783,
+      "userId": "user_superadmin_pawankhot",
+      "amount": -1,
+      "source": "FREE",
+      "transactionType": "CONSUME",
+      "assessmentId": "cat_foundation_quant_revision",
+      "questionId": "q_quant_002",
+      "description": "Deep AI Session for question q_quant_002",
+      "createdAt": "2026-09-21T19:49:35.821Z",
+      "is_test": 0
+    },
+    {
+      "id": 792,
+      "userId": "user_student_akhot5779",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "ADMIN_GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Admin grant by user_superadmin_pawankhot: Admin grant",
+      "createdAt": "2026-09-21T20:41:02.465Z",
+      "is_test": 0
+    },
+    {
+      "id": 794,
+      "userId": "user_1790181923870_xfbfk",
+      "amount": 6,
+      "source": "FREE",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Welcome bonus: 6 Free Deep AI Credits",
+      "createdAt": "2026-09-23T16:45:23.871Z",
+      "is_test": 0
+    },
+    {
+      "id": 1785,
+      "userId": "user_superadmin_pawankhot",
+      "amount": 10,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "AI Credit Pack Purchase: pack_10 (ord_1790284902024_unuc8)",
+      "createdAt": "2026-09-24T21:49:38.515Z",
+      "is_test": 0
+    },
+    {
+      "id": 1786,
+      "userId": "user_superadmin_pawankhot",
+      "amount": 10,
+      "source": "PURCHASED",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "AI Credit Pack Purchase: pack_10 (ord_1790286286068_7sxzf)",
+      "createdAt": "2026-09-24T21:49:38.540Z",
+      "is_test": 0
+    },
+    {
+      "id": 1875,
+      "userId": "user_superadmin_pawankhot",
+      "amount": 50,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (50 credits)",
+      "createdAt": "2026-09-24T22:07:31.222Z",
+      "is_test": 0
+    },
+    {
+      "id": 1973,
+      "userId": "user_student_pawankhot127",
+      "amount": 65,
+      "source": "PREMIUM",
+      "transactionType": "GRANT",
+      "assessmentId": null,
+      "questionId": null,
+      "description": "Premium Billing Period AI Allowance (65 credits)",
+      "createdAt": "2026-09-24T22:19:59.490Z",
+      "is_test": 0
+    }
+  ],
+  "plusTestSelections": [
+    {
+      "id": "pts_1790276204629_09v4",
+      "userId": "user_1790276204624_pkmv5",
+      "assessmentId": "test_prem_assessment_1_1790276204622",
+      "selectedAt": "2026-09-24T18:56:44.629Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276204633_e6fp",
+      "userId": "user_1790276204624_pkmv5",
+      "assessmentId": "test_prem_assessment_2_1790276204622",
+      "selectedAt": "2026-09-24T18:56:44.633Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276204638_yurm",
+      "userId": "user_1790276204636_9ergc",
+      "assessmentId": "test_prem_assessment_1_1790276204622",
+      "selectedAt": "2026-09-24T18:56:44.638Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276261411_7dkg",
+      "userId": "user_1790276261405_m6pj7",
+      "assessmentId": "test_prem_assessment_1_1790276261405",
+      "selectedAt": "2026-09-24T18:57:41.411Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276261414_qvjx",
+      "userId": "user_1790276261405_m6pj7",
+      "assessmentId": "test_prem_assessment_2_1790276261405",
+      "selectedAt": "2026-09-24T18:57:41.414Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276261466_6vow",
+      "userId": "user_1790276261462_639vm",
+      "assessmentId": "test_prem_assessment_1_1790276261405",
+      "selectedAt": "2026-09-24T18:57:41.466Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276286270_w33o",
+      "userId": "user_1790276286265_efc4a",
+      "assessmentId": "test_prem_assessment_1_1790276286264",
+      "selectedAt": "2026-09-24T18:58:06.270Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276286273_fcc7",
+      "userId": "user_1790276286265_efc4a",
+      "assessmentId": "test_prem_assessment_2_1790276286264",
+      "selectedAt": "2026-09-24T18:58:06.273Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276286278_uo2e",
+      "userId": "user_1790276286277_2ky7b",
+      "assessmentId": "test_prem_assessment_1_1790276286264",
+      "selectedAt": "2026-09-24T18:58:06.278Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276309293_3cba",
+      "userId": "user_1790276309288_e3xww",
+      "assessmentId": "test_prem_assessment_1_1790276309287",
+      "selectedAt": "2026-09-24T18:58:29.293Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276309296_e97h",
+      "userId": "user_1790276309288_e3xww",
+      "assessmentId": "test_prem_assessment_2_1790276309287",
+      "selectedAt": "2026-09-24T18:58:29.296Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276309299_1913",
+      "userId": "user_1790276309298_w1wda",
+      "assessmentId": "test_prem_assessment_1_1790276309287",
+      "selectedAt": "2026-09-24T18:58:29.299Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276362287_3imc",
+      "userId": "user_1790276362280_rrdwy",
+      "assessmentId": "test_prem_assessment_1_1790276362278",
+      "selectedAt": "2026-09-24T18:59:22.287Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276362291_r6wa",
+      "userId": "user_1790276362280_rrdwy",
+      "assessmentId": "test_prem_assessment_2_1790276362278",
+      "selectedAt": "2026-09-24T18:59:22.291Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276362296_6b15",
+      "userId": "user_1790276362295_2ll96",
+      "assessmentId": "test_prem_assessment_1_1790276362278",
+      "selectedAt": "2026-09-24T18:59:22.296Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276391499_vvey",
+      "userId": "user_1790276391491_s3f90",
+      "assessmentId": "test_prem_assessment_1_1790276391489",
+      "selectedAt": "2026-09-24T18:59:51.499Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276391503_cpm1",
+      "userId": "user_1790276391491_s3f90",
+      "assessmentId": "test_prem_assessment_2_1790276391489",
+      "selectedAt": "2026-09-24T18:59:51.503Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276391508_ckw5",
+      "userId": "user_1790276391507_aq0zi",
+      "assessmentId": "test_prem_assessment_1_1790276391489",
+      "selectedAt": "2026-09-24T18:59:51.508Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276800057_6a25",
+      "userId": "user_1790276800047_gvg16",
+      "assessmentId": "p2_prem_test_2_1790276800046",
+      "selectedAt": "2026-09-24T19:06:40.057Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276800065_oodo",
+      "userId": "user_1790276800047_gvg16",
+      "assessmentId": "p2_prem_test_1_1790276800046",
+      "selectedAt": "2026-09-24T19:06:40.065Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276800070_a831",
+      "userId": "user_1790276800067_7zcvs",
+      "assessmentId": "p2_prem_test_1_1790276800046",
+      "selectedAt": "2026-09-24T19:06:40.070Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276800073_ytuq",
+      "userId": "user_1790276800071_r3m9z",
+      "assessmentId": "p2_prem_test_1_1790276800046",
+      "selectedAt": "2026-09-24T19:06:40.073Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276919510_uvdy",
+      "userId": "user_1790276919500_9zvlx",
+      "assessmentId": "p2_prem_test_2_1790276919499",
+      "selectedAt": "2026-09-24T19:08:39.510Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276919516_f9vk",
+      "userId": "user_1790276919500_9zvlx",
+      "assessmentId": "p2_prem_test_1_1790276919499",
+      "selectedAt": "2026-09-24T19:08:39.516Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276919519_byba",
+      "userId": "user_1790276919517_k9puo",
+      "assessmentId": "p2_prem_test_1_1790276919499",
+      "selectedAt": "2026-09-24T19:08:39.519Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790276919521_tfmh",
+      "userId": "user_1790276919520_v1uzi",
+      "assessmentId": "p2_prem_test_1_1790276919499",
+      "selectedAt": "2026-09-24T19:08:39.521Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277360926_ivta",
+      "userId": "user_1790277360925_fja7x",
+      "assessmentId": "p3_prem_a_1790277360898",
+      "selectedAt": "2026-09-24T19:16:00.926Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277360934_cvb3",
+      "userId": "user_1790277360934_xagpu",
+      "assessmentId": "p3_prem_a_1790277360898",
+      "selectedAt": "2026-09-24T19:16:00.934Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277360935_a0h9",
+      "userId": "user_1790277360934_xagpu",
+      "assessmentId": "p3_prem_b_1790277360898",
+      "selectedAt": "2026-09-24T19:16:00.935Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277396793_tmsp",
+      "userId": "user_1790277396792_zbgmw",
+      "assessmentId": "p3_prem_a_1790277396772",
+      "selectedAt": "2026-09-24T19:16:36.793Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277396802_pvzc",
+      "userId": "user_1790277396801_8eeld",
+      "assessmentId": "p3_prem_a_1790277396772",
+      "selectedAt": "2026-09-24T19:16:36.802Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277396802_hq6r",
+      "userId": "user_1790277396801_8eeld",
+      "assessmentId": "p3_prem_b_1790277396772",
+      "selectedAt": "2026-09-24T19:16:36.802Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277404040_nnf7",
+      "userId": "user_1790277404036_tbvo8",
+      "assessmentId": "test_prem_assessment_1_1790277404035",
+      "selectedAt": "2026-09-24T19:16:44.040Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277404042_5cbu",
+      "userId": "user_1790277404036_tbvo8",
+      "assessmentId": "test_prem_assessment_2_1790277404035",
+      "selectedAt": "2026-09-24T19:16:44.042Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277404045_szd1",
+      "userId": "user_1790277404044_84k2r",
+      "assessmentId": "test_prem_assessment_1_1790277404035",
+      "selectedAt": "2026-09-24T19:16:44.045Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277411266_3lhq",
+      "userId": "user_1790277411259_ohhhz",
+      "assessmentId": "p2_prem_test_2_1790277411258",
+      "selectedAt": "2026-09-24T19:16:51.266Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277411272_jav2",
+      "userId": "user_1790277411259_ohhhz",
+      "assessmentId": "p2_prem_test_1_1790277411258",
+      "selectedAt": "2026-09-24T19:16:51.272Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277411276_tz6i",
+      "userId": "user_1790277411273_nv11w",
+      "assessmentId": "p2_prem_test_1_1790277411258",
+      "selectedAt": "2026-09-24T19:16:51.276Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790277411278_ggxn",
+      "userId": "user_1790277411277_5ahya",
+      "assessmentId": "p2_prem_test_1_1790277411258",
+      "selectedAt": "2026-09-24T19:16:51.278Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278185184_ozzk",
+      "userId": "user_1790278185180_icurg",
+      "assessmentId": "test_prem_assessment_1_1790278185179",
+      "selectedAt": "2026-09-24T19:29:45.184Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278185186_76if",
+      "userId": "user_1790278185180_icurg",
+      "assessmentId": "test_prem_assessment_2_1790278185179",
+      "selectedAt": "2026-09-24T19:29:45.186Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278185191_1vse",
+      "userId": "user_1790278185189_w2vst",
+      "assessmentId": "test_prem_assessment_1_1790278185179",
+      "selectedAt": "2026-09-24T19:29:45.191Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278191781_gskz",
+      "userId": "user_1790278191757_g175x",
+      "assessmentId": "p2_prem_test_2_1790278191756",
+      "selectedAt": "2026-09-24T19:29:51.781Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278191794_udt3",
+      "userId": "user_1790278191757_g175x",
+      "assessmentId": "p2_prem_test_1_1790278191756",
+      "selectedAt": "2026-09-24T19:29:51.794Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278191798_egjy",
+      "userId": "user_1790278191796_040vm",
+      "assessmentId": "p2_prem_test_1_1790278191756",
+      "selectedAt": "2026-09-24T19:29:51.798Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278191801_qegt",
+      "userId": "user_1790278191800_qtto7",
+      "assessmentId": "p2_prem_test_1_1790278191756",
+      "selectedAt": "2026-09-24T19:29:51.801Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278197913_ymt2",
+      "userId": "user_1790278197912_vzor6",
+      "assessmentId": "p3_prem_a_1790278197900",
+      "selectedAt": "2026-09-24T19:29:57.913Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278197920_04r0",
+      "userId": "user_1790278197919_ugj7b",
+      "assessmentId": "p3_prem_a_1790278197900",
+      "selectedAt": "2026-09-24T19:29:57.920Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278197920_vqqe",
+      "userId": "user_1790278197919_ugj7b",
+      "assessmentId": "p3_prem_b_1790278197900",
+      "selectedAt": "2026-09-24T19:29:57.920Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278356800_cwak",
+      "userId": "user_1790278356790_jpx2f",
+      "assessmentId": "p4_prem_1_1790278356789",
+      "selectedAt": "2026-09-24T19:32:36.800Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278356800_z0n3",
+      "userId": "user_1790278356790_jpx2f",
+      "assessmentId": "p4_prem_2_1790278356789",
+      "selectedAt": "2026-09-24T19:32:36.800Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278379797_1bb3",
+      "userId": "user_1790278379765_igqkk",
+      "assessmentId": "p4_prem_1_1790278379764",
+      "selectedAt": "2026-09-24T19:32:59.797Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278419241_yr9b",
+      "userId": "user_1790278419200_nuqz7",
+      "assessmentId": "p4_prem_1_1790278419199",
+      "selectedAt": "2026-09-24T19:33:39.241Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278424662_82wr",
+      "userId": "user_1790278424658_p02cx",
+      "assessmentId": "test_prem_assessment_1_1790278424657",
+      "selectedAt": "2026-09-24T19:33:44.662Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278424664_a3yi",
+      "userId": "user_1790278424658_p02cx",
+      "assessmentId": "test_prem_assessment_2_1790278424657",
+      "selectedAt": "2026-09-24T19:33:44.664Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278424666_tujf",
+      "userId": "user_1790278424666_84y5c",
+      "assessmentId": "test_prem_assessment_1_1790278424657",
+      "selectedAt": "2026-09-24T19:33:44.667Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278430386_hzmf",
+      "userId": "user_1790278430379_5v76j",
+      "assessmentId": "p2_prem_test_2_1790278430378",
+      "selectedAt": "2026-09-24T19:33:50.386Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278430393_9v3s",
+      "userId": "user_1790278430379_5v76j",
+      "assessmentId": "p2_prem_test_1_1790278430378",
+      "selectedAt": "2026-09-24T19:33:50.393Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278430397_93rb",
+      "userId": "user_1790278430395_nuca6",
+      "assessmentId": "p2_prem_test_1_1790278430378",
+      "selectedAt": "2026-09-24T19:33:50.397Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278430399_1l68",
+      "userId": "user_1790278430398_p8jmr",
+      "assessmentId": "p2_prem_test_1_1790278430378",
+      "selectedAt": "2026-09-24T19:33:50.399Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278435867_7ti3",
+      "userId": "user_1790278435866_5m6v8",
+      "assessmentId": "p3_prem_a_1790278435844",
+      "selectedAt": "2026-09-24T19:33:55.867Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278435876_ssu1",
+      "userId": "user_1790278435875_g9dmt",
+      "assessmentId": "p3_prem_a_1790278435844",
+      "selectedAt": "2026-09-24T19:33:55.876Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790278435877_sf7g",
+      "userId": "user_1790278435875_g9dmt",
+      "assessmentId": "p3_prem_b_1790278435844",
+      "selectedAt": "2026-09-24T19:33:55.877Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279064171_axdv",
+      "userId": "user_1790279064167_1mbyl",
+      "assessmentId": "test_prem_assessment_1_1790279064167",
+      "selectedAt": "2026-09-24T19:44:24.171Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279064173_wxpt",
+      "userId": "user_1790279064167_1mbyl",
+      "assessmentId": "test_prem_assessment_2_1790279064167",
+      "selectedAt": "2026-09-24T19:44:24.173Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279064177_10wu",
+      "userId": "user_1790279064177_mjqft",
+      "assessmentId": "test_prem_assessment_1_1790279064167",
+      "selectedAt": "2026-09-24T19:44:24.177Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279070328_oiow",
+      "userId": "user_1790279070321_ukb0i",
+      "assessmentId": "p2_prem_test_2_1790279070320",
+      "selectedAt": "2026-09-24T19:44:30.328Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279070346_assb",
+      "userId": "user_1790279070321_ukb0i",
+      "assessmentId": "p2_prem_test_1_1790279070320",
+      "selectedAt": "2026-09-24T19:44:30.346Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279070351_vso1",
+      "userId": "user_1790279070349_s14zb",
+      "assessmentId": "p2_prem_test_1_1790279070320",
+      "selectedAt": "2026-09-24T19:44:30.351Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279070353_7dqj",
+      "userId": "user_1790279070352_p4lw3",
+      "assessmentId": "p2_prem_test_1_1790279070320",
+      "selectedAt": "2026-09-24T19:44:30.353Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279076384_2sp5",
+      "userId": "user_1790279076382_10024",
+      "assessmentId": "p3_prem_a_1790279076370",
+      "selectedAt": "2026-09-24T19:44:36.384Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279076391_f96q",
+      "userId": "user_1790279076390_8whvd",
+      "assessmentId": "p3_prem_a_1790279076370",
+      "selectedAt": "2026-09-24T19:44:36.391Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279076391_40zh",
+      "userId": "user_1790279076390_8whvd",
+      "assessmentId": "p3_prem_b_1790279076370",
+      "selectedAt": "2026-09-24T19:44:36.391Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279081852_upvc",
+      "userId": "user_1790279081829_nhyd0",
+      "assessmentId": "p4_prem_1_1790279081828",
+      "selectedAt": "2026-09-24T19:44:41.852Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279385845_ue1r",
+      "userId": "user_1790279385843_jbt4b",
+      "assessmentId": "p6_prem_a_1790279385839",
+      "selectedAt": "2026-09-24T19:49:45.845Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279419936_ht3s",
+      "userId": "user_1790279419934_zq0iu",
+      "assessmentId": "p6_prem_a_1790279419929",
+      "selectedAt": "2026-09-24T19:50:19.936Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279461439_e17k",
+      "userId": "user_1790279461437_rjy09",
+      "assessmentId": "p6_prem_a_1790279461433",
+      "selectedAt": "2026-09-24T19:51:01.439Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279496890_295p",
+      "userId": "user_1790279496873_esjch",
+      "assessmentId": "p6_prem_a_1790279496868",
+      "selectedAt": "2026-09-24T19:51:36.890Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279505921_m2df",
+      "userId": "user_1790279505916_mw4r0",
+      "assessmentId": "test_prem_assessment_1_1790279505915",
+      "selectedAt": "2026-09-24T19:51:45.921Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279505924_ebpf",
+      "userId": "user_1790279505916_mw4r0",
+      "assessmentId": "test_prem_assessment_2_1790279505915",
+      "selectedAt": "2026-09-24T19:51:45.924Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279505927_f410",
+      "userId": "user_1790279505926_j8xxm",
+      "assessmentId": "test_prem_assessment_1_1790279505915",
+      "selectedAt": "2026-09-24T19:51:45.927Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279511505_dusi",
+      "userId": "user_1790279511498_b9pdv",
+      "assessmentId": "p2_prem_test_2_1790279511497",
+      "selectedAt": "2026-09-24T19:51:51.505Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279511511_bnse",
+      "userId": "user_1790279511498_b9pdv",
+      "assessmentId": "p2_prem_test_1_1790279511497",
+      "selectedAt": "2026-09-24T19:51:51.511Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279511514_tvyd",
+      "userId": "user_1790279511512_5giza",
+      "assessmentId": "p2_prem_test_1_1790279511497",
+      "selectedAt": "2026-09-24T19:51:51.514Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279511516_g6lz",
+      "userId": "user_1790279511515_6541u",
+      "assessmentId": "p2_prem_test_1_1790279511497",
+      "selectedAt": "2026-09-24T19:51:51.516Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279516666_k0j2",
+      "userId": "user_1790279516666_24nvo",
+      "assessmentId": "p3_prem_a_1790279516653",
+      "selectedAt": "2026-09-24T19:51:56.666Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279516673_m7pj",
+      "userId": "user_1790279516673_u38k9",
+      "assessmentId": "p3_prem_a_1790279516653",
+      "selectedAt": "2026-09-24T19:51:56.673Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279516673_2027",
+      "userId": "user_1790279516673_u38k9",
+      "assessmentId": "p3_prem_b_1790279516653",
+      "selectedAt": "2026-09-24T19:51:56.673Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279522436_ixf0",
+      "userId": "user_1790279522402_p0gb2",
+      "assessmentId": "p4_prem_1_1790279522401",
+      "selectedAt": "2026-09-24T19:52:02.436Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790279535061_d6pi",
+      "userId": "user_1790279535059_4id3n",
+      "assessmentId": "p6_prem_a_1790279535054",
+      "selectedAt": "2026-09-24T19:52:15.061Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280232063_1po8",
+      "userId": "user_1790280232058_5f95y",
+      "assessmentId": "test_prem_assessment_1_1790280232058",
+      "selectedAt": "2026-09-24T20:03:52.063Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280232066_9wwj",
+      "userId": "user_1790280232058_5f95y",
+      "assessmentId": "test_prem_assessment_2_1790280232058",
+      "selectedAt": "2026-09-24T20:03:52.066Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280232069_tj31",
+      "userId": "user_1790280232068_pmn4z",
+      "assessmentId": "test_prem_assessment_1_1790280232058",
+      "selectedAt": "2026-09-24T20:03:52.069Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280237809_6p6g",
+      "userId": "user_1790280237802_8tpvv",
+      "assessmentId": "p2_prem_test_2_1790280237801",
+      "selectedAt": "2026-09-24T20:03:57.809Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280237817_gfis",
+      "userId": "user_1790280237802_8tpvv",
+      "assessmentId": "p2_prem_test_1_1790280237801",
+      "selectedAt": "2026-09-24T20:03:57.817Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280237822_osfb",
+      "userId": "user_1790280237818_9pp66",
+      "assessmentId": "p2_prem_test_1_1790280237801",
+      "selectedAt": "2026-09-24T20:03:57.822Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280237824_3xlo",
+      "userId": "user_1790280237823_4gihe",
+      "assessmentId": "p2_prem_test_1_1790280237801",
+      "selectedAt": "2026-09-24T20:03:57.824Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280244378_7d7n",
+      "userId": "user_1790280244377_g3d32",
+      "assessmentId": "p3_prem_a_1790280244363",
+      "selectedAt": "2026-09-24T20:04:04.378Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280244387_zrqi",
+      "userId": "user_1790280244386_4fwyt",
+      "assessmentId": "p3_prem_a_1790280244363",
+      "selectedAt": "2026-09-24T20:04:04.387Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280244387_k6y0",
+      "userId": "user_1790280244386_4fwyt",
+      "assessmentId": "p3_prem_b_1790280244363",
+      "selectedAt": "2026-09-24T20:04:04.387Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280249900_nt1z",
+      "userId": "user_1790280249870_ymdv6",
+      "assessmentId": "p4_prem_1_1790280249869",
+      "selectedAt": "2026-09-24T20:04:09.900Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280276686_ztiw",
+      "userId": "user_1790280276685_jofl9",
+      "assessmentId": "p6_prem_a_1790280276681",
+      "selectedAt": "2026-09-24T20:04:36.686Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280863106_nt0x",
+      "userId": "user_1790280863102_p6z73",
+      "assessmentId": "test_prem_assessment_1_1790280863101",
+      "selectedAt": "2026-09-24T20:14:23.106Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280863109_g6ui",
+      "userId": "user_1790280863102_p6z73",
+      "assessmentId": "test_prem_assessment_2_1790280863101",
+      "selectedAt": "2026-09-24T20:14:23.109Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280863114_flux",
+      "userId": "user_1790280863112_zlam3",
+      "assessmentId": "test_prem_assessment_1_1790280863101",
+      "selectedAt": "2026-09-24T20:14:23.114Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280868872_gv3n",
+      "userId": "user_1790280868862_w8jw2",
+      "assessmentId": "p2_prem_test_2_1790280868861",
+      "selectedAt": "2026-09-24T20:14:28.872Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280868885_g19q",
+      "userId": "user_1790280868862_w8jw2",
+      "assessmentId": "p2_prem_test_1_1790280868861",
+      "selectedAt": "2026-09-24T20:14:28.885Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280868892_vv2b",
+      "userId": "user_1790280868888_e22ym",
+      "assessmentId": "p2_prem_test_1_1790280868861",
+      "selectedAt": "2026-09-24T20:14:28.892Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280868896_77rx",
+      "userId": "user_1790280868894_xbe10",
+      "assessmentId": "p2_prem_test_1_1790280868861",
+      "selectedAt": "2026-09-24T20:14:28.896Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280873750_zrek",
+      "userId": "user_1790280873749_2ezmi",
+      "assessmentId": "p3_prem_a_1790280873736",
+      "selectedAt": "2026-09-24T20:14:33.750Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280873759_o3v0",
+      "userId": "user_1790280873758_laat6",
+      "assessmentId": "p3_prem_a_1790280873736",
+      "selectedAt": "2026-09-24T20:14:33.759Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280873759_py38",
+      "userId": "user_1790280873758_laat6",
+      "assessmentId": "p3_prem_b_1790280873736",
+      "selectedAt": "2026-09-24T20:14:33.759Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280879243_ikhc",
+      "userId": "user_1790280879214_m9sd7",
+      "assessmentId": "p4_prem_1_1790280879214",
+      "selectedAt": "2026-09-24T20:14:39.243Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790280889488_5gao",
+      "userId": "user_1790280889487_vbvcu",
+      "assessmentId": "p6_prem_a_1790280889483",
+      "selectedAt": "2026-09-24T20:14:49.488Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281223757_9087",
+      "userId": "user_1790281223747_mof3a",
+      "assessmentId": "test_prem_assessment_1_1790281223735",
+      "selectedAt": "2026-09-24T20:20:23.757Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281223762_nu69",
+      "userId": "user_1790281223747_mof3a",
+      "assessmentId": "test_prem_assessment_2_1790281223735",
+      "selectedAt": "2026-09-24T20:20:23.762Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281223766_dtmu",
+      "userId": "user_1790281223765_tzz27",
+      "assessmentId": "test_prem_assessment_1_1790281223735",
+      "selectedAt": "2026-09-24T20:20:23.766Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281232171_4ivo",
+      "userId": "user_1790281232144_67mbq",
+      "assessmentId": "p2_prem_test_2_1790281232143",
+      "selectedAt": "2026-09-24T20:20:32.171Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281232185_usge",
+      "userId": "user_1790281232144_67mbq",
+      "assessmentId": "p2_prem_test_1_1790281232143",
+      "selectedAt": "2026-09-24T20:20:32.185Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281232191_5c3i",
+      "userId": "user_1790281232188_p51pl",
+      "assessmentId": "p2_prem_test_1_1790281232143",
+      "selectedAt": "2026-09-24T20:20:32.191Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281232197_371y",
+      "userId": "user_1790281232194_5lljw",
+      "assessmentId": "p2_prem_test_1_1790281232143",
+      "selectedAt": "2026-09-24T20:20:32.197Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281240017_gc6w",
+      "userId": "user_1790281240015_l0q2b",
+      "assessmentId": "p3_prem_a_1790281239988",
+      "selectedAt": "2026-09-24T20:20:40.017Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281240034_z1ml",
+      "userId": "user_1790281240032_uzufw",
+      "assessmentId": "p3_prem_a_1790281239988",
+      "selectedAt": "2026-09-24T20:20:40.034Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281240035_vm4t",
+      "userId": "user_1790281240032_uzufw",
+      "assessmentId": "p3_prem_b_1790281239988",
+      "selectedAt": "2026-09-24T20:20:40.035Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281247733_law3",
+      "userId": "user_1790281247697_7z1yk",
+      "assessmentId": "p4_prem_1_1790281247696",
+      "selectedAt": "2026-09-24T20:20:47.733Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790281263214_bh1y",
+      "userId": "user_1790281263210_926sh",
+      "assessmentId": "p6_prem_a_1790281263201",
+      "selectedAt": "2026-09-24T20:21:03.214Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282662153_ht9c",
+      "userId": "user_1790282662113_7db71",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T20:44:22.153Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282662155_7kcd",
+      "userId": "user_1790282662113_7db71",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T20:44:22.155Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282765936_ul1s",
+      "userId": "user_1790282765905_8ivkp",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T20:46:05.936Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282765936_no1h",
+      "userId": "user_1790282765905_8ivkp",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T20:46:05.936Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282788676_m81j",
+      "userId": "user_1790282788649_jxydo",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T20:46:28.676Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282788706_5rta",
+      "userId": "user_1790282788649_jxydo",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T20:46:28.706Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282796254_j19b",
+      "userId": "user_1790282796247_hy8y5",
+      "assessmentId": "test_prem_assessment_1_1790282796245",
+      "selectedAt": "2026-09-24T20:46:36.254Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282796257_nea4",
+      "userId": "user_1790282796247_hy8y5",
+      "assessmentId": "test_prem_assessment_2_1790282796245",
+      "selectedAt": "2026-09-24T20:46:36.257Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282796263_eean",
+      "userId": "user_1790282796261_898xc",
+      "assessmentId": "test_prem_assessment_1_1790282796245",
+      "selectedAt": "2026-09-24T20:46:36.263Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282803542_702x",
+      "userId": "user_1790282803529_qqqvy",
+      "assessmentId": "p2_prem_test_2_1790282803528",
+      "selectedAt": "2026-09-24T20:46:43.542Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282803554_escg",
+      "userId": "user_1790282803529_qqqvy",
+      "assessmentId": "p2_prem_test_1_1790282803528",
+      "selectedAt": "2026-09-24T20:46:43.554Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282803560_znl3",
+      "userId": "user_1790282803557_grijm",
+      "assessmentId": "p2_prem_test_1_1790282803528",
+      "selectedAt": "2026-09-24T20:46:43.560Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282803563_tvp7",
+      "userId": "user_1790282803561_0w7s3",
+      "assessmentId": "p2_prem_test_1_1790282803528",
+      "selectedAt": "2026-09-24T20:46:43.563Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282810148_e2e9",
+      "userId": "user_1790282810146_p3ydf",
+      "assessmentId": "p3_prem_a_1790282810125",
+      "selectedAt": "2026-09-24T20:46:50.148Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282810159_6uhz",
+      "userId": "user_1790282810158_wep09",
+      "assessmentId": "p3_prem_a_1790282810125",
+      "selectedAt": "2026-09-24T20:46:50.159Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282810160_33kx",
+      "userId": "user_1790282810158_wep09",
+      "assessmentId": "p3_prem_b_1790282810125",
+      "selectedAt": "2026-09-24T20:46:50.160Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282816982_0978",
+      "userId": "user_1790282816941_43oxy",
+      "assessmentId": "p4_prem_1_1790282816940",
+      "selectedAt": "2026-09-24T20:46:56.982Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790282831182_7zm4",
+      "userId": "user_1790282831180_z7zyn",
+      "assessmentId": "p6_prem_a_1790282831175",
+      "selectedAt": "2026-09-24T20:47:11.182Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283079780_og7b",
+      "userId": "user_1790283079775_k4ptg",
+      "assessmentId": "test_prem_assessment_1_1790283079774",
+      "selectedAt": "2026-09-24T20:51:19.780Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283079783_0md3",
+      "userId": "user_1790283079775_k4ptg",
+      "assessmentId": "test_prem_assessment_2_1790283079774",
+      "selectedAt": "2026-09-24T20:51:19.783Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283079787_iajl",
+      "userId": "user_1790283079786_ubi3e",
+      "assessmentId": "test_prem_assessment_1_1790283079774",
+      "selectedAt": "2026-09-24T20:51:19.787Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283088355_a4rc",
+      "userId": "user_1790283088339_7gl9g",
+      "assessmentId": "p2_prem_test_2_1790283088337",
+      "selectedAt": "2026-09-24T20:51:28.355Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283088365_ilqj",
+      "userId": "user_1790283088339_7gl9g",
+      "assessmentId": "p2_prem_test_1_1790283088337",
+      "selectedAt": "2026-09-24T20:51:28.365Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283088371_zyva",
+      "userId": "user_1790283088367_3d3ld",
+      "assessmentId": "p2_prem_test_1_1790283088337",
+      "selectedAt": "2026-09-24T20:51:28.371Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283088374_uge2",
+      "userId": "user_1790283088372_ngafz",
+      "assessmentId": "p2_prem_test_1_1790283088337",
+      "selectedAt": "2026-09-24T20:51:28.374Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283096882_2c5a",
+      "userId": "user_1790283096880_fzbu3",
+      "assessmentId": "p3_prem_a_1790283096852",
+      "selectedAt": "2026-09-24T20:51:36.882Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283096893_4uap",
+      "userId": "user_1790283096892_30ajr",
+      "assessmentId": "p3_prem_a_1790283096852",
+      "selectedAt": "2026-09-24T20:51:36.893Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283096893_9nvd",
+      "userId": "user_1790283096892_30ajr",
+      "assessmentId": "p3_prem_b_1790283096852",
+      "selectedAt": "2026-09-24T20:51:36.893Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283104394_x197",
+      "userId": "user_1790283104353_v8n6i",
+      "assessmentId": "p4_prem_1_1790283104352",
+      "selectedAt": "2026-09-24T20:51:44.394Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283120319_itjg",
+      "userId": "user_1790283120317_60ue4",
+      "assessmentId": "p6_prem_a_1790283120310",
+      "selectedAt": "2026-09-24T20:52:00.319Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283144676_pajb",
+      "userId": "user_1790283144657_xl0kn",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T20:52:24.676Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790283144677_ephl",
+      "userId": "user_1790283144657_xl0kn",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T20:52:24.677Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284013766_sd6f",
+      "userId": "user_1790284013759_45fi1",
+      "assessmentId": "test_prem_assessment_1_1790284013758",
+      "selectedAt": "2026-09-24T21:06:53.766Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284013769_queb",
+      "userId": "user_1790284013759_45fi1",
+      "assessmentId": "test_prem_assessment_2_1790284013758",
+      "selectedAt": "2026-09-24T21:06:53.769Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284013774_7tga",
+      "userId": "user_1790284013773_nzb05",
+      "assessmentId": "test_prem_assessment_1_1790284013758",
+      "selectedAt": "2026-09-24T21:06:53.774Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284018043_5zur",
+      "userId": "user_1790284018032_vr6us",
+      "assessmentId": "p2_prem_test_2_1790284018031",
+      "selectedAt": "2026-09-24T21:06:58.043Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284018053_5apq",
+      "userId": "user_1790284018032_vr6us",
+      "assessmentId": "p2_prem_test_1_1790284018031",
+      "selectedAt": "2026-09-24T21:06:58.053Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284018059_8540",
+      "userId": "user_1790284018055_it3iu",
+      "assessmentId": "p2_prem_test_1_1790284018031",
+      "selectedAt": "2026-09-24T21:06:58.059Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284018062_drxj",
+      "userId": "user_1790284018060_cu5v4",
+      "assessmentId": "p2_prem_test_1_1790284018031",
+      "selectedAt": "2026-09-24T21:06:58.062Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284022661_cujf",
+      "userId": "user_1790284022659_ab9se",
+      "assessmentId": "p3_prem_a_1790284022644",
+      "selectedAt": "2026-09-24T21:07:02.661Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284022670_g2iy",
+      "userId": "user_1790284022669_j9u8k",
+      "assessmentId": "p3_prem_a_1790284022644",
+      "selectedAt": "2026-09-24T21:07:02.670Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284022671_j3yp",
+      "userId": "user_1790284022669_j9u8k",
+      "assessmentId": "p3_prem_b_1790284022644",
+      "selectedAt": "2026-09-24T21:07:02.671Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284026756_o228",
+      "userId": "user_1790284026721_1z8td",
+      "assessmentId": "p4_prem_1_1790284026719",
+      "selectedAt": "2026-09-24T21:07:06.756Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284035227_gzz6",
+      "userId": "user_1790284035225_3pzyy",
+      "assessmentId": "p6_prem_a_1790284035218",
+      "selectedAt": "2026-09-24T21:07:15.227Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284047873_8czu",
+      "userId": "user_1790284047856_jpitj",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T21:07:27.873Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790284047876_18c2",
+      "userId": "user_1790284047856_jpitj",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T21:07:27.876Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285956931_mkf1",
+      "userId": "user_1790285956925_ov774",
+      "assessmentId": "test_prem_assessment_1_1790285956924",
+      "selectedAt": "2026-09-24T21:39:16.931Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285956944_71uz",
+      "userId": "user_1790285956925_ov774",
+      "assessmentId": "test_prem_assessment_2_1790285956924",
+      "selectedAt": "2026-09-24T21:39:16.944Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285956950_14wz",
+      "userId": "user_1790285956949_ejaw5",
+      "assessmentId": "test_prem_assessment_1_1790285956924",
+      "selectedAt": "2026-09-24T21:39:16.950Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285960472_onc7",
+      "userId": "user_1790285960458_ezoey",
+      "assessmentId": "p2_prem_test_2_1790285960457",
+      "selectedAt": "2026-09-24T21:39:20.472Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285960485_dom3",
+      "userId": "user_1790285960458_ezoey",
+      "assessmentId": "p2_prem_test_1_1790285960457",
+      "selectedAt": "2026-09-24T21:39:20.485Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285960490_6b2n",
+      "userId": "user_1790285960486_wn4n5",
+      "assessmentId": "p2_prem_test_1_1790285960457",
+      "selectedAt": "2026-09-24T21:39:20.490Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285960493_k4yw",
+      "userId": "user_1790285960492_2ss36",
+      "assessmentId": "p2_prem_test_1_1790285960457",
+      "selectedAt": "2026-09-24T21:39:20.493Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285963828_13t6",
+      "userId": "user_1790285963827_yg5ng",
+      "assessmentId": "p3_prem_a_1790285963813",
+      "selectedAt": "2026-09-24T21:39:23.828Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285963836_ztsa",
+      "userId": "user_1790285963835_yxdc5",
+      "assessmentId": "p3_prem_a_1790285963813",
+      "selectedAt": "2026-09-24T21:39:23.836Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285963837_7qnu",
+      "userId": "user_1790285963835_yxdc5",
+      "assessmentId": "p3_prem_b_1790285963813",
+      "selectedAt": "2026-09-24T21:39:23.837Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285967440_fjj9",
+      "userId": "user_1790285967387_yts4x",
+      "assessmentId": "p4_prem_1_1790285967386",
+      "selectedAt": "2026-09-24T21:39:27.440Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285973397_y6qj",
+      "userId": "user_1790285973393_rfr5c",
+      "assessmentId": "p6_prem_a_1790285973377",
+      "selectedAt": "2026-09-24T21:39:33.397Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285983109_q73b",
+      "userId": "user_1790285983081_m8kdq",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T21:39:43.109Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790285983113_jl4u",
+      "userId": "user_1790285983081_m8kdq",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T21:39:43.113Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286601770_0ygc",
+      "userId": "user_1790286601764_4vn2p",
+      "assessmentId": "test_prem_assessment_1_1790286601763",
+      "selectedAt": "2026-09-24T21:50:01.770Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286601774_btgk",
+      "userId": "user_1790286601764_4vn2p",
+      "assessmentId": "test_prem_assessment_2_1790286601763",
+      "selectedAt": "2026-09-24T21:50:01.774Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286601777_2i1s",
+      "userId": "user_1790286601776_uf3gq",
+      "assessmentId": "test_prem_assessment_1_1790286601763",
+      "selectedAt": "2026-09-24T21:50:01.777Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286604976_byj4",
+      "userId": "user_1790286604965_6fa3i",
+      "assessmentId": "p2_prem_test_2_1790286604964",
+      "selectedAt": "2026-09-24T21:50:04.976Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286604985_cia4",
+      "userId": "user_1790286604965_6fa3i",
+      "assessmentId": "p2_prem_test_1_1790286604964",
+      "selectedAt": "2026-09-24T21:50:04.985Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286604989_fgdc",
+      "userId": "user_1790286604987_pv8uk",
+      "assessmentId": "p2_prem_test_1_1790286604964",
+      "selectedAt": "2026-09-24T21:50:04.989Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286604992_emgd",
+      "userId": "user_1790286604990_h5n5y",
+      "assessmentId": "p2_prem_test_1_1790286604964",
+      "selectedAt": "2026-09-24T21:50:04.992Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286608252_ehhc",
+      "userId": "user_1790286608249_eer3x",
+      "assessmentId": "p3_prem_a_1790286608213",
+      "selectedAt": "2026-09-24T21:50:08.252Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286608275_gzz7",
+      "userId": "user_1790286608273_3prjp",
+      "assessmentId": "p3_prem_a_1790286608213",
+      "selectedAt": "2026-09-24T21:50:08.275Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286608276_nfad",
+      "userId": "user_1790286608273_3prjp",
+      "assessmentId": "p3_prem_b_1790286608213",
+      "selectedAt": "2026-09-24T21:50:08.276Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286611719_j7jf",
+      "userId": "user_1790286611659_5zpeu",
+      "assessmentId": "p4_prem_1_1790286611658",
+      "selectedAt": "2026-09-24T21:50:11.720Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286618086_66dq",
+      "userId": "user_1790286618085_14d6a",
+      "assessmentId": "p6_prem_a_1790286618080",
+      "selectedAt": "2026-09-24T21:50:18.086Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286628002_djq0",
+      "userId": "user_1790286627990_p3mmi",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T21:50:28.002Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790286628003_lcgx",
+      "userId": "user_1790286627990_p3mmi",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T21:50:28.003Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287669133_nror",
+      "userId": "user_1790287669128_0ntvr",
+      "assessmentId": "test_prem_assessment_1_1790287669126",
+      "selectedAt": "2026-09-24T22:07:49.133Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287669137_8pf4",
+      "userId": "user_1790287669128_0ntvr",
+      "assessmentId": "test_prem_assessment_2_1790287669126",
+      "selectedAt": "2026-09-24T22:07:49.137Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287669142_s91r",
+      "userId": "user_1790287669139_kuo8x",
+      "assessmentId": "test_prem_assessment_1_1790287669126",
+      "selectedAt": "2026-09-24T22:07:49.142Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287672658_q095",
+      "userId": "user_1790287672644_4bapz",
+      "assessmentId": "p2_prem_test_2_1790287672644",
+      "selectedAt": "2026-09-24T22:07:52.658Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287672673_3v8z",
+      "userId": "user_1790287672644_4bapz",
+      "assessmentId": "p2_prem_test_1_1790287672644",
+      "selectedAt": "2026-09-24T22:07:52.673Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287672679_mac1",
+      "userId": "user_1790287672675_zqhkk",
+      "assessmentId": "p2_prem_test_1_1790287672644",
+      "selectedAt": "2026-09-24T22:07:52.679Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287672681_xker",
+      "userId": "user_1790287672680_6m1dr",
+      "assessmentId": "p2_prem_test_1_1790287672644",
+      "selectedAt": "2026-09-24T22:07:52.681Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287676074_z88z",
+      "userId": "user_1790287676050_flk8d",
+      "assessmentId": "p3_prem_a_1790287676034",
+      "selectedAt": "2026-09-24T22:07:56.074Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287676094_wkj9",
+      "userId": "user_1790287676093_cy0na",
+      "assessmentId": "p3_prem_a_1790287676034",
+      "selectedAt": "2026-09-24T22:07:56.094Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287676095_ole4",
+      "userId": "user_1790287676093_cy0na",
+      "assessmentId": "p3_prem_b_1790287676034",
+      "selectedAt": "2026-09-24T22:07:56.095Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287679178_rdjv",
+      "userId": "user_1790287679137_du93s",
+      "assessmentId": "p4_prem_1_1790287679136",
+      "selectedAt": "2026-09-24T22:07:59.178Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287685416_1i2i",
+      "userId": "user_1790287685414_8r1iv",
+      "assessmentId": "p6_prem_a_1790287685407",
+      "selectedAt": "2026-09-24T22:08:05.416Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287695291_e1s9",
+      "userId": "user_1790287695277_66zu5",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T22:08:15.291Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790287695292_wk6w",
+      "userId": "user_1790287695277_66zu5",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T22:08:15.292Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288599891_vl0a",
+      "userId": "user_1790288599887_9gz0e",
+      "assessmentId": "test_prem_assessment_1_1790288599886",
+      "selectedAt": "2026-09-24T22:23:19.891Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288599894_kf7o",
+      "userId": "user_1790288599887_9gz0e",
+      "assessmentId": "test_prem_assessment_2_1790288599886",
+      "selectedAt": "2026-09-24T22:23:19.894Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288599898_yuwt",
+      "userId": "user_1790288599897_9e5e6",
+      "assessmentId": "test_prem_assessment_1_1790288599886",
+      "selectedAt": "2026-09-24T22:23:19.898Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288603093_f1v9",
+      "userId": "user_1790288603084_sjdtp",
+      "assessmentId": "p2_prem_test_2_1790288603083",
+      "selectedAt": "2026-09-24T22:23:23.093Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288603103_h9ck",
+      "userId": "user_1790288603084_sjdtp",
+      "assessmentId": "p2_prem_test_1_1790288603083",
+      "selectedAt": "2026-09-24T22:23:23.103Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288603107_jis5",
+      "userId": "user_1790288603104_bh1fs",
+      "assessmentId": "p2_prem_test_1_1790288603083",
+      "selectedAt": "2026-09-24T22:23:23.107Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288603110_3k6h",
+      "userId": "user_1790288603109_r348u",
+      "assessmentId": "p2_prem_test_1_1790288603083",
+      "selectedAt": "2026-09-24T22:23:23.110Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288606174_eaxo",
+      "userId": "user_1790288606173_qncof",
+      "assessmentId": "p3_prem_a_1790288606156",
+      "selectedAt": "2026-09-24T22:23:26.174Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288606210_kaeu",
+      "userId": "user_1790288606208_k1av9",
+      "assessmentId": "p3_prem_a_1790288606156",
+      "selectedAt": "2026-09-24T22:23:26.210Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288606211_0k6w",
+      "userId": "user_1790288606208_k1av9",
+      "assessmentId": "p3_prem_b_1790288606156",
+      "selectedAt": "2026-09-24T22:23:26.211Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288609160_mjab",
+      "userId": "user_1790288609126_l2ui6",
+      "assessmentId": "p4_prem_1_1790288609125",
+      "selectedAt": "2026-09-24T22:23:29.160Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288614959_860k",
+      "userId": "user_1790288614957_9tem4",
+      "assessmentId": "p6_prem_a_1790288614952",
+      "selectedAt": "2026-09-24T22:23:34.959Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288624139_cbrl",
+      "userId": "user_1790288624123_arwqy",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T22:23:44.139Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790288624140_50sk",
+      "userId": "user_1790288624123_arwqy",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T22:23:44.140Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289212727_rwje",
+      "userId": "user_1790289212720_knzed",
+      "assessmentId": "test_prem_assessment_1_1790289212719",
+      "selectedAt": "2026-09-24T22:33:32.727Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289212729_3rld",
+      "userId": "user_1790289212720_knzed",
+      "assessmentId": "test_prem_assessment_2_1790289212719",
+      "selectedAt": "2026-09-24T22:33:32.729Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289212745_bnu6",
+      "userId": "user_1790289212744_ovx3w",
+      "assessmentId": "test_prem_assessment_1_1790289212719",
+      "selectedAt": "2026-09-24T22:33:32.745Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289216006_ctda",
+      "userId": "user_1790289215995_p5vtx",
+      "assessmentId": "p2_prem_test_2_1790289215994",
+      "selectedAt": "2026-09-24T22:33:36.006Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289216017_5als",
+      "userId": "user_1790289215995_p5vtx",
+      "assessmentId": "p2_prem_test_1_1790289215994",
+      "selectedAt": "2026-09-24T22:33:36.017Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289216024_esnt",
+      "userId": "user_1790289216020_jiuys",
+      "assessmentId": "p2_prem_test_1_1790289215994",
+      "selectedAt": "2026-09-24T22:33:36.024Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289216027_owxl",
+      "userId": "user_1790289216026_t5kch",
+      "assessmentId": "p2_prem_test_1_1790289215994",
+      "selectedAt": "2026-09-24T22:33:36.027Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289219179_ymzn",
+      "userId": "user_1790289219176_rfryk",
+      "assessmentId": "p3_prem_a_1790289219135",
+      "selectedAt": "2026-09-24T22:33:39.179Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289219192_lhhl",
+      "userId": "user_1790289219190_1aorj",
+      "assessmentId": "p3_prem_a_1790289219135",
+      "selectedAt": "2026-09-24T22:33:39.192Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289219193_2e0c",
+      "userId": "user_1790289219190_1aorj",
+      "assessmentId": "p3_prem_b_1790289219135",
+      "selectedAt": "2026-09-24T22:33:39.193Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289222178_objl",
+      "userId": "user_1790289222152_w04df",
+      "assessmentId": "p4_prem_1_1790289222151",
+      "selectedAt": "2026-09-24T22:33:42.178Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289228235_jjso",
+      "userId": "user_1790289228232_clkyv",
+      "assessmentId": "p6_prem_a_1790289228225",
+      "selectedAt": "2026-09-24T22:33:48.235Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289240182_j24b",
+      "userId": "user_1790289240155_7m9ea",
+      "assessmentId": "test_prem_1",
+      "selectedAt": "2026-09-24T22:34:00.182Z",
+      "is_test": 0
+    },
+    {
+      "id": "pts_1790289240184_m6nw",
+      "userId": "user_1790289240155_7m9ea",
+      "assessmentId": "test_prem_2",
+      "selectedAt": "2026-09-24T22:34:00.184Z",
+      "is_test": 0
+    }
+  ],
+  "users": [
+    {
+      "id": "user_student_akhot5779",
+      "email": "akhot5779@gmail.com",
+      "name": "Aditya Khot",
+      "plan": "FREE",
+      "subscriptionStatus": "inactive",
+      "currentPeriodStart": null,
+      "currentPeriodEnd": null,
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    },
+    {
+      "id": "user_student_pawankhot127",
+      "email": "pawan.khot1272004@gmail.com",
+      "name": "Pawan Khot",
+      "plan": "PRO",
+      "subscriptionStatus": "active",
+      "currentPeriodStart": "2026-09-24T22:19:59.473Z",
+      "currentPeriodEnd": "2026-10-24T22:19:59.473Z",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    },
+    {
+      "id": "user_superadmin_pawankhot",
+      "email": "pawankhot9@gmail.com",
+      "name": "Pawan Khot",
+      "plan": "PLUS",
+      "subscriptionStatus": "active",
+      "currentPeriodStart": "2026-09-24T22:07:31.202Z",
+      "currentPeriodEnd": "2026-10-24T22:07:31.202Z",
+      "cancelAtPeriodEnd": 0,
+      "pendingPlan": null
+    }
+  ]
+}

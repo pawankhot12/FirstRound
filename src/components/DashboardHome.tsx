@@ -31,10 +31,15 @@ import {
   TestSeries,
   UserProfile,
   WeakQuestionItem,
+  Advertisement,
 } from '../types';
 import { HomeSearchBar } from './HomeSearchBar';
 import { recommendationEngine } from '../services/RecommendationEngine';
 import { apiGetTestHistory } from '../api';
+import { WeeklyLeagueCard } from './WeeklyLeagueCard';
+import { SponsorAdCard } from './SponsorAdCard';
+import { SponsorAdSlot } from './SponsorAdSlot';
+import { TopSponsorAdSlot } from './TopSponsorBanner';
 
 interface DashboardHomeProps {
   currentUser: UserProfile | null;
@@ -60,16 +65,6 @@ interface TargetTestStatus {
 }
 
 export const DashboardHome: React.FC<DashboardHomeProps> = ({
-
-
-
-
-
-
-
-
-
-
   currentUser,
   tests,
   weakQuestions,
@@ -82,8 +77,63 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
   onOpenProfile,
   onViewAttemptReport,
 }) => {
-
   const [testHistory, setTestHistory] = useState<any[]>([]);
+  const [activeAds, setActiveAds] = useState<Advertisement[]>([]);
+  const [topAds, setTopAds] = useState<Advertisement[]>([]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadDashAds = () => {
+      // Fetch Dashboard Bottom / Sidebar Ads
+      fetch('/api/advertisements/active?placement=DASHBOARD_SIDEBAR')
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMounted && data?.success) {
+            if (Array.isArray(data.advertisements)) {
+              setActiveAds(data.advertisements);
+            } else if (data.advertisement) {
+              setActiveAds([data.advertisement]);
+            } else {
+              setActiveAds([]);
+            }
+          } else if (isMounted) {
+            setActiveAds([]);
+          }
+        })
+        .catch(() => {
+          if (isMounted) setActiveAds([]);
+        });
+
+      // Fetch Dashboard Top Ads
+      fetch('/api/advertisements/active?placement=DASHBOARD_TOP')
+        .then((res) => res.json())
+        .then((data) => {
+          if (isMounted && data?.success) {
+            if (Array.isArray(data.advertisements)) {
+              setTopAds(data.advertisements);
+            } else if (data.advertisement) {
+              setTopAds([data.advertisement]);
+            } else {
+              setTopAds([]);
+            }
+          } else if (isMounted) {
+            setTopAds([]);
+          }
+        })
+        .catch(() => {
+          if (isMounted) setTopAds([]);
+        });
+    };
+
+    loadDashAds();
+    window.addEventListener('firstround:sponsors-updated', loadDashAds);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener('firstround:sponsors-updated', loadDashAds);
+    };
+  }, []);
 
   useEffect(() => {
     if (currentUser?.id) {
@@ -133,14 +183,17 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
 
   const levelInfo = getLevelInfo(displayPoints);
 
+
   // Real Leaderboard standing: only ranked if the user has completed eligible assessments and earned points
   const activeLeaderboardParticipants = leaderboard.filter((l) => l.totalPoints > 0);
   const userLeaderboardEntry = currentUser
     ? activeLeaderboardParticipants.find((l) => l.userId === currentUser.id)
     : null;
+  const hasCompletedTests = userAttempts.length > 0;
   const isUserEligibleForRank = Boolean(
     userLeaderboardEntry && displayPoints > 0 && hasCompletedTests
   );
+
   const userRank = isUserEligibleForRank && userLeaderboardEntry ? userLeaderboardEntry.rank : null;
   const totalRankedCount = activeLeaderboardParticipants.length;
   const outperformingPercentile =
@@ -850,6 +903,9 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
               ))}
             </div>
           </div>
+
+          {/* Section 4: Dynamic Sponsor Advertisement Slot */}
+          <SponsorAdSlot ads={activeAds} />
         </div>
 
         {/* ========================================================= */}
@@ -932,82 +988,8 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
             </div>
           </div>
 
-          {/* Card 2: Leaderboard Home Card (Strictly conditional based on real activity) */}
-          <div
-            id="leaderboard-standing-card"
-            className="bg-surface rounded-2xl p-6 border border-border shadow-xs space-y-4 relative overflow-hidden"
-          >
-            <div className="flex items-center justify-between">
-              <button
-                onClick={() => onNavigateTab('leaderboard')}
-                className="group flex items-center gap-1 text-sm font-bold text-text-primary hover:text-sky-700 transition-colors"
-              >
-                <Trophy
-                  className={`w-4 h-4 ${isUserEligibleForRank ? 'text-amber-500' : 'text-slate-400'}`}
-                />
-                <span>Leaderboard Standing</span>
-                <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
-              </button>
-
-              <span
-                className={`px-2 py-0.5 text-[10px] font-extrabold uppercase rounded ${
-                  isUserEligibleForRank
-                    ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                    : 'bg-surface-hover text-text-muted'
-                }`}
-              >
-                {isUserEligibleForRank ? `Rank #${userRank}` : 'Unranked'}
-              </span>
-            </div>
-
-            {isUserEligibleForRank && userRank ? (
-              <div className="text-center py-2 space-y-2">
-                <div className="w-12 h-12 rounded-full bg-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center mx-auto text-xl font-extrabold shadow-inner">
-                  🏆
-                </div>
-
-                <h4 className="text-base font-bold text-text-primary">
-                  You are Ranked #{userRank} on Campus Standing!
-                </h4>
-
-                <p className="text-xs text-text-muted px-2 leading-relaxed">
-                  {outperformingPercentile
-                    ? `Outperforming ${outperformingPercentile}% of active candidates across ${totalRankedCount} campus participant${
-                        totalRankedCount > 1 ? 's' : ''
-                      }.`
-                    : `Ranked #${userRank} among ${totalRankedCount} active campus candidate${
-                        totalRankedCount > 1 ? 's' : ''
-                      }.`}
-                </p>
-
-                <button
-                  onClick={() => onNavigateTab('leaderboard')}
-                  className="w-full mt-3 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-all"
-                >
-                  View Full Leaderboard →
-                </button>
-              </div>
-            ) : (
-              <div className="text-center py-3 space-y-2">
-                <div className="w-12 h-12 rounded-full bg-surface-hover border border-border text-slate-400 flex items-center justify-center mx-auto shadow-inner">
-                  <Trophy className="w-5 h-5 text-slate-400" />
-                </div>
-
-                <h4 className="text-base font-bold text-text-primary">Not Ranked Yet</h4>
-
-                <p className="text-xs text-text-muted px-2 leading-relaxed max-w-xs mx-auto">
-                  Complete an assessment to appear on the campus leaderboard.
-                </p>
-
-                <button
-                  onClick={() => onNavigateTab('leaderboard')}
-                  className="w-full mt-3 py-2.5 bg-surface-hover hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl shadow-xs transition-all"
-                >
-                  View Full Leaderboard →
-                </button>
-              </div>
-            )}
-          </div>
+          {/* Card 2: Weekly League 2.0 Card */}
+          <WeeklyLeagueCard userId={currentUser?.id} onNavigateTab={onNavigateTab} />
 
           {/* Card 3: Placement Journey */}
           <div
@@ -1291,7 +1273,7 @@ export const DashboardHome: React.FC<DashboardHomeProps> = ({
             </div>
           </div>
 
-          {/* Card 4: Placement Toolkit */}
+          {/* Card 4: Placement Toolkit (ONE SINGLE CARD) */}
           <div
             id="placement-toolkit-card"
             className="bg-primary rounded-2xl p-5 text-white border border-primary-hover space-y-3.5 shadow-xs"

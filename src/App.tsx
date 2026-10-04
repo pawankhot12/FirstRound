@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { supabase, isSupabaseConfigured, signOutSupabase } from './services/supabaseClient';
 import {
   apiAskAIDoubt,
   apiGetBookmarkedQuestions,
@@ -20,20 +21,48 @@ import {
   apiLogTestVisit,
   apiLogTestStart,
 } from './api';
-import { ActiveTestEngine } from './components/ActiveTestEngine';
-import { AdminPanel } from './components/AdminPanel';
-import { AuthModal } from './components/AuthModal';
+import { TestEngineErrorBoundary } from './components/TestEngineErrorBoundary';
+import { TestHubErrorBoundary } from './components/TestHubErrorBoundary';
 import { DashboardHome } from './components/DashboardHome';
 import { LandingPage } from './components/LandingPage';
-import { LeaderboardView } from './components/LeaderboardView';
+import { AIErrorBoundary } from './components/AIErrorBoundary';
+import { Sparkles } from 'lucide-react';
 import { Navbar } from './components/Navbar';
-import { RevisionVaultView } from './components/RevisionVaultView';
+import { TopSponsorAdSlot } from './components/TopSponsorBanner';
 import { ScratchpadModal } from './components/ScratchpadModal';
 import { TestHub } from './components/TestHub';
-import { TestResultModal } from './components/TestResultModal';
-import { UserProfileModal } from './components/UserProfileModal';
+
+// Lazy loaded heavy route views, test engine & modals to optimize initial bundle size & load performance
+const ActiveTestEngine = React.lazy(() =>
+  import('./components/ActiveTestEngine').then((m) => ({ default: m.ActiveTestEngine }))
+);
+const AdminPanel = React.lazy(() =>
+  import('./components/AdminPanel').then((m) => ({ default: m.AdminPanel }))
+);
+const AccountSettingsView = React.lazy(() =>
+  import('./components/AccountSettingsView').then((m) => ({ default: m.AccountSettingsView }))
+);
+const LeaderboardView = React.lazy(() =>
+  import('./components/LeaderboardView').then((m) => ({ default: m.LeaderboardView }))
+);
+const RevisionVaultView = React.lazy(() =>
+  import('./components/RevisionVaultView').then((m) => ({ default: m.RevisionVaultView }))
+);
+const AuthModal = React.lazy(() =>
+  import('./components/AuthModal').then((m) => ({ default: m.AuthModal }))
+);
+const FirstRoundAICopilotModal = React.lazy(() =>
+  import('./components/FirstRoundAICopilotModal').then((m) => ({ default: m.FirstRoundAICopilotModal }))
+);
+const TestResultModal = React.lazy(() =>
+  import('./components/TestResultModal').then((m) => ({ default: m.TestResultModal }))
+);
+const UserProfileModal = React.lazy(() =>
+  import('./components/UserProfileModal').then((m) => ({ default: m.UserProfileModal }))
+);
 import {
   AIDoubtResponse,
+  AIRecommendedAction,
   AppNotification,
   BookmarkedItem,
   CompanyInfo,
@@ -53,6 +82,25 @@ export default function App() {
   // Navigation & View State
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   const [loading, setLoading] = useState(true);
+
+  // ─── Auth Resolution Gate ─────────────────────────────────────────────────
+  // authReady = true means: Supabase session has been checked and currentUser/userId
+  // have been authoritatively resolved. Only set to true ONCE per page load.
+  // NEVER render LandingPage until authReady is true — prevents Login flash on
+  // email/password login, OAuth callback, page refresh, and tab reopen.
+  const [authReady, setAuthReady] = useState(false);
+
+  // OAuth bridge state — true if the current page load originated from an OAuth redirect.
+  // Prevents the LandingPage from flashing before the Supabase session is resolved.
+  const [oauthBridgePending, setOauthBridgePending] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const h = window.location.hash;
+    const s = window.location.search;
+    return h.includes('access_token') || h.includes('error=') || s.includes('code=');
+  });
+  // Prevents duplicate login-or-register calls when both getSession() and
+  // the SIGNED_IN onAuthStateChange event fire on the same OAuth redirect.
+  const oauthBridgeFiredRef = useRef(false);
 
   // User State
   const [userId, setUserId] = useState<string | null>(() => localStorage.getItem('firstround_uid') || null);
@@ -85,65 +133,236 @@ export default function App() {
   const [authModalMode, setAuthModalMode] = useState<'register' | 'login'>('register');
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [isScratchpadOpen, setIsScratchpadOpen] = useState(false);
+  const [isAICopilotOpen, setIsAICopilotOpen] = useState(false);
 
   // Initial Load
   useEffect(() => {
     loadAllData();
   }, [userId]);
 
+  // ─── Google OAuth callback bridge ────────────────────────────────────────────
+  // Runs once on mount. Reads the Supabase session that the SDK automatically
+  // parses from the OAuth redirect hash, creates or fetches the matching SQLite
+  // profile via /api/auth/login-or-register, then wires it into the existing
+  // userId / currentUser / loadAllData flow.
+  // Email login is NOT touched — it goes through AuthModal → /api/auth/login-or-register
+  // directly and never reaches this effect.
+  useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      // No Supabase: auth resolution is instant — no session to check
+      setOauthBridgePending(false);
+      setAuthReady(true);
+      return;
+    }
+
+    /**
+     * Given a live Supabase session, create-or-fetch the SQLite profile and
+     * wire up the app state.  Returns true if a profile was successfully
+     * established (or was already present), false otherwise.
+     */
+    const bridgeSession = async (session: { user: { id: string; email?: string; user_metadata?: Record<string, any> } } | null): Promise<boolean> => {
+      if (!session?.user) return false;
+      // Idempotency guard — only run once per page load
+      if (oauthBridgeFiredRef.current) return true;
+      oauthBridgeFiredRef.current = true;
+
+      const supabaseUser = session.user;
+      try {
+        const meta: Record<string, any> = supabaseUser.user_metadata || {};
+        const displayName =
+          meta['full_name'] ||
+          meta['name'] ||
+          (supabaseUser.email ? supabaseUser.email.split('@')[0] : 'User');
+
+        const res = await fetch('/api/auth/login-or-register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: supabaseUser.email || '',
+            name: displayName,
+            college: meta['college'] || '',
+            targetCompany: meta['targetCompany'] || '',
+            targetRole: meta['targetRole'] || '',
+          }),
+        });
+
+        if (!res.ok) {
+          console.error('[OAuth Bridge] /api/auth/login-or-register error:', res.status, await res.text());
+          cleanOAuthUrl();
+          return false;
+        }
+
+        const data = await res.json();
+        if (data?.user) {
+          localStorage.setItem('firstround_uid', data.user.id);
+          setUserId(data.user.id);
+          setCurrentUser(data.user);
+          setIsAuthModalOpen(false);
+          cleanOAuthUrl();
+          return true;
+        }
+      } catch (err) {
+        console.error('[OAuth Bridge] Unexpected error:', err);
+      }
+      cleanOAuthUrl();
+      return false;
+    };
+
+    /** Remove OAuth tokens/codes from the browser URL after a successful callback. */
+    const cleanOAuthUrl = () => {
+      if (
+        window.location.hash.includes('access_token') ||
+        window.location.hash.includes('error=') ||
+        window.location.search.includes('code=')
+      ) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    };
+
+    // 1. Check for an existing Supabase session immediately (handles OAuth redirect)
+    const init = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        await bridgeSession(data.session as any);
+      } catch (err) {
+        console.error('[OAuth Bridge] getSession error:', err);
+      } finally {
+        // Mark auth as resolved regardless of outcome.
+        // This is the ONLY place where authReady transitions to true on startup.
+        // After this point the render gate will show LandingPage or Dashboard.
+        setOauthBridgePending(false);
+        setAuthReady(true);
+      }
+    };
+    init();
+
+    // 2. Subscribe for future events (token refresh, sign-out, late SIGNED_IN delivery)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' || event === 'INITIAL_SESSION') {
+        await bridgeSession(session as any);
+        setOauthBridgePending(false);
+        // If init() already fired setAuthReady(true), this is a no-op. Safe to call again.
+        setAuthReady(true);
+      } else if (event === 'SIGNED_OUT') {
+        // Mirror Supabase sign-out for ALL users (email/password AND OAuth).
+        // This is the authoritative logout path — only fires on real Supabase sign-out,
+        // not on profile load failures or network errors.
+        localStorage.removeItem('firstround_uid');
+        sessionStorage.removeItem('firstround_testhub_category');
+        setUserId(null);
+        setCurrentUser(null);
+        setUserAttempts([]);
+        setWeakQuestions([]);
+        setBookmarkedItems([]);
+        setIsAuthModalOpen(false);
+        setActiveTab('home');
+        // After explicit sign-out, auth is still "ready" — just unauthenticated
+        setAuthReady(true);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // ─── End Google OAuth bridge ─────────────────────────────────────────────────
+
   const loadAllData = async () => {
     try {
       setLoading(true);
-      const [
-        testsRes,
-        catalogueRes,
-        companiesRes,
-        eventsRes,
-        leaderboardRes,
-        userRes,
-        weakRes,
-        bookmarksRes,
-        attemptsRes,
-        notifRes,
-      ] = await Promise.all([
+      // 1. Fetch CRITICAL initial data required for instant dashboard render
+      const [testsRes, userRes] = await Promise.all([
         apiGetTests(),
-        apiGetCatalogue(),
-        apiGetCompanies(),
-        apiGetMegaEvents(),
-        apiGetLeaderboard(),
         apiGetUserProfile(userId),
-        apiGetWeakQuestions(userId),
-        apiGetBookmarkedQuestions(userId),
-        apiGetUserAttempts(userId),
-        apiGetNotifications(userId),
       ]);
 
-      setTests(testsRes.tests || []);
-      setCatalogueTests(catalogueRes.tests || []);
-      setCompanies(companiesRes.companies || []);
-      setEvents(eventsRes.events || []);
-      setLeaderboard(leaderboardRes.leaderboard || []);
+      const allTests = testsRes?.tests || [];
+      setTests(allTests);
+      setCatalogueTests(allTests.filter((t: TestSeries) => t.id.startsWith('cat_')));
+
       if (userRes?.user) {
+        // Only update currentUser if a valid profile was returned.
+        // NEVER clear currentUser here — a profile fetch failure is a data error,
+        // NOT a logout. Only handleLogout() and the SIGNED_OUT event may clear currentUser.
         setCurrentUser(userRes.user);
         if (userRes.user.id && userRes.user.id !== userId) {
           localStorage.setItem('firstround_uid', userRes.user.id);
           setUserId(userRes.user.id);
         }
-      } else {
-        setCurrentUser(null);
       }
-      setWeakQuestions(weakRes.weakQuestions || []);
-      setBookmarkedItems(bookmarksRes.bookmarks || []);
-      setUserAttempts(attemptsRes.attempts || []);
-      setNotifications(notifRes.notifications || []);
-      setUnreadNotificationCount(notifRes.unreadCount ?? 0);
-      setReadNotificationIds(notifRes.readIds || []);
+      // If userRes?.user is null/undefined (profile not found or request failed),
+      // keep the existing currentUser and userId — do not treat it as a logout.
     } catch (err) {
-      console.error('Error loading placement data:', err);
+      console.error('Error loading critical placement data:', err);
+      // On error: keep existing currentUser. Never clear auth state due to data failure.
     } finally {
+      // Unblock initial UI rendering immediately once critical data phase resolves
       setLoading(false);
     }
+
+    // 2. Fetch SECONDARY background data asynchronously without blocking UI render
+    try {
+      const activeUid = userId;
+      const [
+        companiesRes,
+        eventsRes,
+        leaderboardRes,
+        weakRes,
+        bookmarksRes,
+        attemptsRes,
+        notifRes,
+      ] = await Promise.all([
+        apiGetCompanies(),
+        apiGetMegaEvents(),
+        apiGetLeaderboard(),
+        activeUid ? apiGetWeakQuestions(activeUid) : Promise.resolve({ weakQuestions: [] }),
+        activeUid ? apiGetBookmarkedQuestions(activeUid) : Promise.resolve({ bookmarks: [] }),
+        activeUid ? apiGetUserAttempts(activeUid) : Promise.resolve({ attempts: [] }),
+        activeUid ? apiGetNotifications(activeUid) : Promise.resolve({ notifications: [], unreadCount: 0, readIds: [] }),
+      ]);
+
+      setCompanies(companiesRes?.companies || []);
+      setEvents(eventsRes?.events || []);
+      setLeaderboard(leaderboardRes?.leaderboard || []);
+      setWeakQuestions(weakRes?.weakQuestions || []);
+      setBookmarkedItems(bookmarksRes?.bookmarks || []);
+      setUserAttempts(attemptsRes?.attempts || []);
+      setNotifications(notifRes?.notifications || []);
+      setUnreadNotificationCount(notifRes?.unreadCount ?? 0);
+      setReadNotificationIds(notifRes?.readIds || []);
+    } catch (err) {
+      console.error('Error loading secondary background data:', err);
+    }
   };
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const handleRefreshNotifications = () => {
+      apiGetNotifications(userId)
+        .then((notifRes) => {
+          if (notifRes) {
+            setNotifications(notifRes.notifications || []);
+            setUnreadNotificationCount(notifRes.unreadCount ?? 0);
+            setReadNotificationIds(notifRes.readIds || []);
+          }
+        })
+        .catch((err) => console.warn('[App] Failed to refresh notifications:', err));
+    };
+
+    window.addEventListener('firstround:notifications-updated', handleRefreshNotifications);
+    window.addEventListener('firstround:credits-updated', handleRefreshNotifications);
+    window.addEventListener('firstround:subscription-updated', handleRefreshNotifications);
+    window.addEventListener('firstround:entitlement-updated', handleRefreshNotifications);
+
+    return () => {
+      window.removeEventListener('firstround:notifications-updated', handleRefreshNotifications);
+      window.removeEventListener('firstround:credits-updated', handleRefreshNotifications);
+      window.removeEventListener('firstround:subscription-updated', handleRefreshNotifications);
+      window.removeEventListener('firstround:entitlement-updated', handleRefreshNotifications);
+    };
+  }, [userId]);
+
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
@@ -196,7 +415,7 @@ export default function App() {
         handleStartTest(targetTest, 'exam');
       } else {
         try {
-          const res = await apiGetTestById(testId);
+          const res = await apiGetTestById(testId, userId);
           if (res?.test) {
             handleStartTest(res.test, 'exam');
           } else {
@@ -216,6 +435,16 @@ export default function App() {
 
     if (actionType === 'OPEN_REVISION' || notif.actionTab === 'vault') {
       setActiveTab('vault');
+      return;
+    }
+
+    if (actionType === 'OPEN_CAREER' || notif.actionTab === 'career') {
+      setActiveTab('career');
+      return;
+    }
+
+    if (actionType === 'OPEN_CREDITS' || notif.actionTab === 'credits') {
+      window.dispatchEvent(new CustomEvent('firstround_open_credits_modal'));
       return;
     }
 
@@ -258,9 +487,17 @@ export default function App() {
     setCurrentUser(user);
     setIsAuthModalOpen(false);
     setActiveTab('home');
+    // Email/password login arrives here before the Supabase onAuthStateChange fires.
+    // Mark auth as ready immediately so the authenticated workspace is shown at once.
+    setAuthReady(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await signOutSupabase();
+    } catch (err) {
+      console.error('[Logout] Supabase signOut error:', err);
+    }
     localStorage.removeItem('firstround_uid');
     sessionStorage.removeItem('firstround_testhub_category');
     setUserId(null);
@@ -291,9 +528,25 @@ export default function App() {
         }
       }
       apiLogTestVisit(userId, test.id, mode).catch(console.error);
-      const data = await apiGetTestById(test.id);
-      setActiveTest(data.test);
-      setActiveTestMode(mode);
+      const data = await apiGetTestById(test.id, userId);
+      if (data?.isLocked) {
+        showToast(data.error || 'This Premium assessment requires FirstRound Premium or Plus plan selection.');
+        return;
+      }
+      apiLogTestStart(userId, test.id, mode).catch(console.error);
+      if (data && data.test && Array.isArray(data.test.questions)) {
+        const normalizedQuestions = data.test.questions.map((q: Question) => ({
+          ...q,
+          questionType: q.questionType || (q.codeSnippet || (q as any).starterCode ? 'CODING' : 'MCQ'),
+        }));
+        setActiveTest({
+          ...data.test,
+          questions: normalizedQuestions,
+        });
+        setActiveTestMode(mode);
+      } else {
+        showToast('This assessment is currently locked or questions are not available.');
+      }
     } catch (err) {
       console.error('Failed to fetch test questions:', err);
     }
@@ -333,6 +586,7 @@ export default function App() {
         userId,
         responses,
         timeTakenSeconds,
+        mode: activeTestMode,
       });
 
       // Clear in-progress progress state from local storage on successful submit
@@ -387,23 +641,59 @@ export default function App() {
 
   // If in active test taking mode, render the proctored test engine full screen
   if (activeTest) {
-    const bookmarkedSet = new Set(bookmarkedItems.map((b) => b.questionId));
+    const bookmarkedSet = new Set((bookmarkedItems || []).map((b) => b?.questionId).filter((id): id is string => Boolean(id)));
     return (
-      <ActiveTestEngine
-        test={activeTest}
-        mode={activeTestMode}
-        userId={userId}
-        onExit={() => setActiveTest(null)}
-        onSubmit={handleSubmitTest}
-        onToggleBookmark={handleToggleBookmark}
-        initialBookmarkedIds={bookmarkedSet}
-        onOpenScratchpad={() => setIsScratchpadOpen(true)}
-      />
+      <TestEngineErrorBoundary onExit={() => setActiveTest(null)}>
+        <React.Suspense
+          fallback={
+            <div className="min-h-screen bg-app-bg flex items-center justify-center font-['Plus_Jakarta_Sans']">
+              <div className="flex flex-col items-center gap-4">
+                <div className="w-10 h-10 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin mx-auto"></div>
+                <p className="text-sm font-semibold text-slate-600">Loading Assessment Environment…</p>
+              </div>
+            </div>
+          }
+        >
+          <ActiveTestEngine
+            test={activeTest}
+            mode={activeTestMode}
+            userId={userId}
+            onExit={() => setActiveTest(null)}
+            onSubmit={handleSubmitTest}
+            onToggleBookmark={handleToggleBookmark}
+            initialBookmarkedIds={bookmarkedSet}
+            onOpenScratchpad={() => setIsScratchpadOpen(true)}
+          />
+        </React.Suspense>
+      </TestEngineErrorBoundary>
     );
   }
 
-  // 1. Unauthenticated Visitor Flow: Render Public Landing Page
-  if (!loading && (!currentUser || !userId)) {
+  // ─── Auth Resolution Gate ─────────────────────────────────────────────────
+  // STEP 1: Block ALL rendering until Supabase session is authoritatively resolved.
+  // authReady is set to true exactly once: after supabase.auth.getSession() completes
+  // (or immediately when Supabase is not configured).
+  // This prevents LandingPage from flashing during:
+  //   - email/password login session restore
+  //   - OAuth callback processing
+  //   - page refresh while logged in
+  //   - tab reopen with stored session
+  if (!authReady) {
+    return (
+      <div className="min-h-screen bg-app-bg flex items-center justify-center font-['Plus_Jakarta_Sans']">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 rounded-2xl bg-primary/20 flex items-center justify-center animate-pulse">
+            <Sparkles className="w-6 h-6 text-primary" />
+          </div>
+          <p className="text-text-secondary text-sm">Loading FirstRound…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // STEP 2: Auth resolved. Now decide: authenticated or unauthenticated?
+  // Only show LandingPage after auth is confirmed as resolved AND user is not logged in.
+  if (!currentUser || !userId) {
     return (
       <div className="min-h-screen bg-app-bg text-text-primary flex flex-col font-['Plus_Jakarta_Sans'] antialiased no-scrollbar">
         <LandingPage
@@ -434,8 +724,118 @@ export default function App() {
   }
 
   // 2. Authenticated Candidate Flow: Render Main Placement Application
+  const handleExecuteAIAction = async (action: AIRecommendedAction): Promise<boolean> => {
+    if (!action || typeof action !== 'object') {
+      console.warn('[AI Action Security] Invalid action payload object:', action);
+      return false;
+    }
+
+    const { actionType, payload, target } = action;
+    const rawTarget = payload || target;
+
+    const ALLOWED_ACTION_TYPES = new Set([
+      'OPEN_TEST',
+      'OPEN_PRACTICE',
+      'OPEN_REVISION',
+      'OPEN_HISTORY',
+      'OPEN_CAREER_TRACK',
+      'NAVIGATE_TAB',
+    ]);
+
+    if (!actionType || !ALLOWED_ACTION_TYPES.has(actionType)) {
+      console.warn('[AI Action Security] Rejected invalid or non-allowlisted actionType:', actionType);
+      return false;
+    }
+
+    // Security sanitization: Reject URLs, javascript: protocol, scripts, eval, path traversal
+    if (typeof rawTarget === 'string') {
+      const lower = rawTarget.toLowerCase().trim();
+      if (
+        lower.startsWith('javascript:') ||
+        lower.startsWith('http:') ||
+        lower.startsWith('https:') ||
+        lower.startsWith('//') ||
+        lower.includes('<script') ||
+        lower.includes('eval(') ||
+        lower.includes('window.') ||
+        lower.includes('document.') ||
+        lower.startsWith('/')
+      ) {
+        console.warn('[AI Action Security] Rejected unsafe/external payload:', rawTarget);
+        return false;
+      }
+    }
+
+    // Execute actions safely based on actionType
+    if (actionType === 'NAVIGATE_TAB') {
+      const ALLOWED_TABS = new Set(['home', 'tests', 'leaderboard', 'vault', 'career', 'admin']);
+      if (!rawTarget || !ALLOWED_TABS.has(rawTarget)) {
+        console.warn('[AI Action Security] Rejected unknown tab navigation target:', rawTarget);
+        return false;
+      }
+      setActiveTab(rawTarget as NavTab);
+      setIsAICopilotOpen(false);
+      return true;
+    }
+
+    if (actionType === 'OPEN_REVISION') {
+      setActiveTab('vault');
+      setIsAICopilotOpen(false);
+      return true;
+    }
+
+    if (actionType === 'OPEN_HISTORY') {
+      setActiveTab('vault');
+      setIsAICopilotOpen(false);
+      return true;
+    }
+
+    if (actionType === 'OPEN_CAREER_TRACK') {
+      setActiveTab('career');
+      setIsAICopilotOpen(false);
+      return true;
+    }
+
+    if (actionType === 'OPEN_TEST' || actionType === 'OPEN_PRACTICE') {
+      const mode: TestMode = actionType === 'OPEN_PRACTICE' ? 'practice' : 'exam';
+      const testId = rawTarget;
+
+      if (!testId || typeof testId !== 'string') {
+        console.warn('[AI Action Security] Missing test ID for:', actionType);
+        return false;
+      }
+
+      // Verify test ID exists in active catalogue (state tests or apiGetTestById)
+      let targetTest = tests.find((t) => t.id === testId);
+      if (!targetTest) {
+        try {
+          const res = await apiGetTestById(testId, userId);
+          if (res?.test) {
+            targetTest = res.test;
+          }
+        } catch (err) {
+          console.warn('[AI Action Security] Failed to fetch test ID from API:', testId);
+        }
+      }
+
+      if (!targetTest) {
+        console.warn('[AI Action Security] Rejected execution for non-existent test ID:', testId);
+        return false;
+      }
+
+      setIsAICopilotOpen(false);
+      await handleStartTest(targetTest, mode);
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <div className="min-h-screen bg-app-bg text-text-primary flex flex-col font-['Plus_Jakarta_Sans'] antialiased selection:bg-amber-300 selection:text-text-primary">
+      {/* Top Sponsor Banner (Only renders if active DASHBOARD_TOP ad exists) */}
+      <TopSponsorAdSlot placement="DASHBOARD_TOP" />
+
       {/* Top Main Navigation */}
       <Navbar
         activeTab={activeTab}
@@ -458,7 +858,10 @@ export default function App() {
 
       {/* Main Content View Switcher */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        {loading ? (
+        {/* Only show calibration spinner if initial test data hasn't arrived yet.
+            Do NOT block on `loading` — secondary data (leaderboard, notifications, etc.)
+            loads in the background and must never freeze the authenticated workspace. */}
+        {(loading && tests.length === 0) ? (
           <div className="py-24 text-center space-y-4">
             <div className="w-10 h-10 border-4 border-sky-500/20 border-t-sky-500 rounded-full animate-spin mx-auto"></div>
             <p className="text-sm font-semibold text-slate-600">
@@ -466,7 +869,13 @@ export default function App() {
             </p>
           </div>
         ) : (
-          <>
+          <React.Suspense
+            fallback={
+              <div className="py-16 text-center text-slate-400 text-sm font-semibold animate-pulse">
+                Loading workspace view…
+              </div>
+            }
+          >
             {activeTab === 'home' && (
               <DashboardHome
                 currentUser={currentUser}
@@ -484,15 +893,17 @@ export default function App() {
             )}
 
             {activeTab === 'tests' && (
-              <TestHub
-                tests={catalogueTests}
-                companies={companies}
-                currentUser={currentUser}
-                userAttempts={userAttempts}
-                weakQuestions={weakQuestions}
-                onStartTest={handleStartTest}
-                onNavigateTab={setActiveTab}
-              />
+              <TestHubErrorBoundary>
+                <TestHub
+                  tests={catalogueTests}
+                  companies={companies}
+                  currentUser={currentUser}
+                  userAttempts={userAttempts}
+                  weakQuestions={weakQuestions}
+                  onStartTest={handleStartTest}
+                  onNavigateTab={setActiveTab}
+                />
+              </TestHubErrorBoundary>
             )}
 
             {activeTab === 'vault' && (
@@ -504,23 +915,70 @@ export default function App() {
                 onStartCustomQuiz={handleStartCustomRevisionQuiz}
                 onStartTest={handleStartTest}
                 onAskAI={handleAskAIDoubt}
+                currentUser={currentUser}
               />
             )}
 
             {activeTab === 'leaderboard' && (
-              <LeaderboardView leaderboard={leaderboard} currentUserId={currentUser?.id} />
+              <LeaderboardView
+                leaderboard={leaderboard}
+                currentUserId={currentUser?.id}
+                currentUser={currentUser}
+                onNavigateTab={setActiveTab}
+              />
             )}
 
             {activeTab === 'admin' && (
-              <AdminPanel
-                tests={tests}
-                onRefreshTests={async () => {
-                  const res = await apiGetTests();
-                  setTests(res.tests || []);
+              currentUser?.role === 'admin' || currentUser?.role === 'super_admin' ? (
+                <AdminPanel
+                  currentUser={currentUser}
+                  tests={tests}
+                  onRefreshTests={async () => {
+                    const res = await apiGetTests();
+                    const all = res.tests || [];
+                    setTests(all);
+                    setCatalogueTests(all.filter((t: TestSeries) => t.id.startsWith('cat_')));
+                  }}
+                />
+              ) : (
+                <div className="max-w-md mx-auto my-12 p-8 bg-white rounded-3xl border border-slate-200 text-center space-y-4 shadow-sm">
+                  <div className="w-12 h-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center mx-auto font-bold text-xl">
+                    403
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 font-['Outfit']">Access Forbidden</h3>
+                  <p className="text-xs text-slate-500">
+                    You do not have administrative privileges to access the Admin Command Center.
+                  </p>
+                  <button
+                    onClick={() => setActiveTab('home')}
+                    className="px-5 py-2.5 bg-primary text-white text-xs font-bold rounded-xl shadow-xs hover:bg-primary-hover transition-colors"
+                  >
+                    Return to Home
+                  </button>
+                </div>
+              )
+            )}
+
+            {activeTab === 'settings' && currentUser && (
+              <AccountSettingsView
+                currentUser={currentUser}
+                onUpdateUser={handleUpdateUser}
+                onNavigateTab={setActiveTab}
+                onLogout={handleLogout}
+                onDeleteAccountSuccess={() => {
+                  localStorage.removeItem('firstround_uid');
+                  sessionStorage.removeItem('firstround_testhub_category');
+                  setUserId(null);
+                  setCurrentUser(null);
+                  setUserAttempts([]);
+                  setWeakQuestions([]);
+                  setBookmarkedItems([]);
+                  setIsAuthModalOpen(false);
+                  setActiveTab('home');
                 }}
               />
             )}
-          </>
+          </React.Suspense>
         )}
       </main>
 
@@ -572,6 +1030,29 @@ export default function App() {
           }}
           onAskAI={handleAskAIDoubt}
         />
+      )}
+
+      {/* Floating FirstRound AI Copilot Launcher */}
+      <button
+        id="floating-ai-copilot-launcher"
+        onClick={() => setIsAICopilotOpen(true)}
+        className="fixed bottom-5 right-5 z-40 px-4 py-2.5 bg-slate-950 hover:bg-slate-900 active:scale-95 text-amber-300 font-black text-xs rounded-full shadow-2xl border border-amber-400/40 flex items-center gap-2 transition-all group"
+        title="Open FirstRound AI Placement Copilot"
+      >
+        <Sparkles className="w-4 h-4 fill-amber-400 text-amber-400 group-hover:rotate-12 transition-transform" />
+        <span>FirstRound AI</span>
+      </button>
+
+      {/* FirstRound AI Placement Copilot Modal */}
+      {isAICopilotOpen && (
+        <AIErrorBoundary onClose={() => setIsAICopilotOpen(false)}>
+          <FirstRoundAICopilotModal
+            currentUser={currentUser}
+            onClose={() => setIsAICopilotOpen(false)}
+            onNavigateTab={setActiveTab}
+            onExecuteAction={handleExecuteAIAction}
+          />
+        </AIErrorBoundary>
       )}
       {/* Toast Feedback Alert */}
       {toastMessage && (

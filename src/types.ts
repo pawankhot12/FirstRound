@@ -1,6 +1,6 @@
-export type Role = 'student' | 'admin';
+export type Role = 'student' | 'admin' | 'super_admin';
 
-export type NavTab = 'home' | 'tests' | 'vault' | 'leaderboard' | 'admin';
+export type NavTab = 'home' | 'tests' | 'vault' | 'leaderboard' | 'admin' | 'settings';
 
 export type TestCategory =
   | 'foundation'
@@ -27,6 +27,18 @@ export type TestMode = 'exam' | 'practice';
 export type NotificationType =
   | 'ANNOUNCEMENT'
   | 'NEW_TEST'
+  | 'ASSESSMENT_REMINDER'
+  | 'RESULT_AVAILABLE'
+  | 'PRACTICE_RECOMMENDATION'
+  | 'REVISION_REMINDER'
+  | 'LEAGUE_UPDATE'
+  | 'LEAGUE_POSITION'
+  | 'CAREER_UPDATE'
+  | 'AI_CREDIT_WARNING'
+  | 'AI_CREDITS_EXHAUSTED'
+  | 'SUBSCRIPTION_UPDATE'
+  | 'PAYMENT_CONFIRMATION'
+  | 'SYSTEM_NOTICE'
   | 'COMPETITION'
   | 'LEADERBOARD'
   | 'ACHIEVEMENT'
@@ -34,11 +46,16 @@ export type NotificationType =
   | 'SYSTEM';
 
 export type NotificationActionType =
+  | 'NONE'
   | 'OPEN_TEST'
   | 'OPEN_LEADERBOARD'
   | 'OPEN_REVISION'
+  | 'OPEN_CAREER'
+  | 'OPEN_CREDITS'
   | 'OPEN_PROFILE'
   | 'OPEN_ANNOUNCEMENT';
+
+export type NotificationPriority = 'Normal' | 'Important' | 'Critical' | 'NORMAL' | 'IMPORTANT';
 
 export interface AppNotification {
   id: string;
@@ -46,16 +63,213 @@ export interface AppNotification {
   title: string;
   message: string;
   createdAt: string;
+  expiresAt?: string;
+  readAt?: string | null;
   read?: boolean;
+  priority?: NotificationPriority;
   actionType?: NotificationActionType | string;
   actionTargetId?: string;
   actionTestId?: string;
-  actionTab?: NavTab;
+  actionTab?: NavTab | string;
   actionLabel?: string;
   actionUrl?: string;
   targetCompany?: string;
   targetUserId?: string;
   audience?: string;
+  senderId?: string;
+  relatedEntityId?: string;
+  metadata?: any;
+}
+
+export type SubscriptionPlan = 'FREE' | 'PLUS' | 'PRO' | 'PREMIUM';
+export type SubscriptionStatus = 'inactive' | 'active' | 'expired' | 'cancelled' | 'past_due';
+export type AssessmentAccessType = 'FREE' | 'PREMIUM';
+
+export interface PlusTestSelection {
+  id: string;
+  userId: string;
+  assessmentId: string;
+  selectedAt: string;
+}
+
+export interface SubscriptionInfo {
+  userId: string;
+  plan: SubscriptionPlan;
+  status: SubscriptionStatus;
+  currentPeriodStart: string | null;
+  currentPeriodEnd: string | null;
+  cancelAtPeriodEnd: boolean;
+  pendingPlan: SubscriptionPlan | null;
+  selectedAssessmentIds: string[];
+}
+
+export type CreditSource = 'FREE' | 'PURCHASED' | 'PREMIUM';
+export type CreditTransactionType =
+  | 'GRANT'
+  | 'USAGE'
+  | 'PURCHASE'
+  | 'ADMIN_GRANT'
+  | 'ADMIN_DEDUCT'
+  | 'REFUND'
+  | 'ADJUSTMENT';
+
+export interface DeepAICreditLedgerItem {
+  id?: number;
+  userId: string;
+  transactionType: CreditTransactionType;
+  amount: number;
+  source: CreditSource;
+  referenceId?: string | null;
+  metadata?: any;
+  createdAt: string;
+}
+
+export interface DeepAIPremiumPeriod {
+  id: string;
+  userId: string;
+  periodStart: string;
+  periodEnd: string;
+  allocatedCredits: number;
+  usedCredits: number;
+  status: 'ACTIVE' | 'EXPIRED' | 'CANCELLED';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DeepAICreditBalance {
+  total?: number;
+  totalAvailable?: number;
+  free: number;
+  purchased: number;
+  premium: number;
+  isPremiumUser?: boolean;
+  premiumPeriodStart?: string | null;
+  premiumPeriodEnd?: string | null;
+  premiumAllocated?: number | null;
+  premiumUsed?: number | null;
+  premiumRemaining?: number | null;
+  premiumPeriodStatus?: 'ACTIVE' | 'EXPIRED' | 'CANCELLED' | 'NONE';
+  ledger?: DeepAICreditLedgerItem[];
+}
+
+export interface AssessmentEntitlement {
+  id: string;
+  userId: string;
+  assessmentId: string;
+  source: 'PREMIUM' | 'PURCHASED' | 'ADMIN';
+  status: 'ACTIVE' | 'EXPIRED' | 'REVOKED';
+  provider?: string | null;
+  providerOrderId?: string | null;
+  purchasedAt: string;
+  expiresAt?: string | null;
+  metadata?: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DeepAISession {
+  id: string;
+  userId: string;
+  assessmentId?: string;
+  questionId: string;
+  creditLedgerReference?: number | null;
+  mode: 'practice';
+  messageCount: number;
+  maxMessages: number;
+  status: 'ACTIVE' | 'CLOSED';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type PaymentProductType = 'ASSESSMENT' | 'AI_CREDIT_PACK';
+
+export type PaymentOrderStatus =
+  | 'CREATED'
+  | 'AUTHORIZED'
+  | 'CAPTURED'
+  | 'FAILED'
+  | 'REFUNDED'
+  | 'CANCELLED';
+
+export type FulfillmentStatus =
+  | 'FULFILLED'
+  | 'PENDING'
+  | 'RECONCILIATION_REQUIRED'
+  | 'NOT_FULFILLED'
+  | 'UNMATCHED';
+
+export interface PaymentOrder {
+  id: string;
+  internalOrderId?: string | null;
+  userId?: string | null;
+  userName?: string | null;
+  userEmail?: string | null;
+  productType?: PaymentProductType | string | null;
+  productId?: string | null;
+  productTitle?: string | null;
+  amount: number; // in integer paise (e.g. 2900 = ₹29)
+  currency: string;
+  status: PaymentOrderStatus; // Razorpay Payment Status (CAPTURED, CREATED, FAILED, etc.)
+  fulfillmentStatus?: FulfillmentStatus; // Distinct Fulfillment Status
+  isUnmatched?: boolean;
+  razorpayOrderId?: string | null;
+  razorpayPaymentId?: string | null;
+  razorpaySignature?: string | null;
+  metadata?: any;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface CreditPackConfig {
+  id: string;
+  credits: number;
+  pricePaise: number;
+  title: string;
+  badge?: string;
+  popular?: boolean;
+}
+
+export type SubscriptionStatus =
+  | 'CREATED'
+  | 'AUTHENTICATED'
+  | 'ACTIVE'
+  | 'PENDING'
+  | 'HALTED'
+  | 'CANCELLED'
+  | 'EXPIRED'
+  | 'COMPLETED';
+
+export interface PremiumSubscription {
+  id: string;
+  userId: string;
+  provider: 'RAZORPAY';
+  razorpaySubscriptionId?: string | null;
+  razorpayPlanId?: string | null;
+  status: SubscriptionStatus;
+  currentPeriodStart?: string | null;
+  currentPeriodEnd?: string | null;
+  cancelledAt?: string | null;
+  endedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SubscriptionPlanConfig {
+  id: string;
+  name: string;
+  amountPaise: number;
+  currency: string;
+  billingInterval: 'monthly';
+  premiumCreditAllowance: number;
+}
+
+export interface PaymentConfigResponse {
+  keyId: string;
+  testMode: boolean;
+  currency: string;
+  creditPacks: CreditPackConfig[];
+  assessmentPricePaise: number;
+  subscriptionPlan?: SubscriptionPlanConfig;
 }
 
 export interface User {
@@ -65,6 +279,12 @@ export interface User {
   college?: string;
   targetCompany?: string;
   targetRole?: string;
+  phone?: string;
+  avatarUrl?: string;
+  avatar?: string;
+  linkedIn?: string;
+  github?: string;
+  portfolio?: string;
   role: Role;
   totalPoints: number;
   totalTestsAttempted: number;
@@ -74,11 +294,90 @@ export interface User {
   averageAccuracyPercentage?: number;
   averageTimePerQuestionSeconds: number;
   globalRank?: number;
+  currentLeague?: string;
+  weeklyXp?: number;
   readNotificationIds?: string[];
   createdAt: string;
+
+  // Account Access & Ban Management (Phase H.5)
+  accountStatus?: 'ACTIVE' | 'TEMPORARILY_BANNED' | 'PERMANENTLY_BANNED' | 'DELETED';
+  bannedUntil?: string | null;
+  banReason?: string | null;
+  bannedBy?: string | null;
+  bannedAt?: string | null;
+  deletedAt?: string | null;
+  deletedBy?: string | null;
+
+  // Future Payment Provider fields (nullable)
+  provider?: string | null;
+  providerCustomerId?: string | null;
+  providerSubscriptionId?: string | null;
+  currentPeriodStart?: string | null;
+  currentPeriodEnd?: string | null;
+}
+
+export interface DeepAIUsageRecord {
+  id?: number;
+  userId: string;
+  requestCount: number;
+  inputTokens: number;
+  outputTokens: number;
+  estimatedCost: number;
+  periodStart: string;
+  periodEnd: string;
+  createdAt?: string;
+}
+
+export interface DeepAIEntitlementStatus {
+  eligible: boolean;
+  isPremium: boolean;
+  status: 'eligible' | 'locked';
+  source?: CreditSource | 'NONE';
+  remainingCredits: number;
+  creditBreakdown?: {
+    free: number;
+    purchased: number;
+    premium: number;
+  };
+  reason?: string;
+  activeSession?: DeepAISession | null;
+  currentUsage?: {
+    requestCount: number;
+    inputTokens: number;
+    outputTokens: number;
+    estimatedCost: number;
+  };
 }
 
 export type UserProfile = User;
+
+export type LeagueTier =
+  | 'Bronze'
+  | 'Silver'
+  | 'Gold'
+  | 'Platinum'
+  | 'Diamond'
+  | 'Heroic'
+  | 'Elite Heroic'
+  | 'Master'
+  | 'Elite Master';
+
+export interface WeeklySeason {
+  id: string;
+  status: 'ACTIVE' | 'FINALIZED';
+  startTime: string;
+  endTime: string;
+}
+
+export interface WeeklyStanding {
+  userId: string;
+  seasonId: string;
+  groupId: string;
+  league: LeagueTier | string;
+  weeklyXp: number;
+  rank?: number | null;
+  movement?: 'PROMOTE' | 'STAY' | 'DEMOTE' | 'PENDING' | string;
+}
 
 export interface QuestionOption {
   id: 'A' | 'B' | 'C' | 'D';
@@ -201,6 +500,8 @@ export interface TestSeries {
   status?: 'ready' | 'coming_soon';
   /** Human-readable scoring formula e.g. "+10/-2", "+4/-1", "No negative marking" */
   scoringModel?: string;
+  /** Access tier for this assessment. Default is 'FREE'. */
+  accessType?: AssessmentAccessType;
 }
 
 export interface CompanyInfo {
@@ -237,6 +538,21 @@ export interface TopicStat {
   accuracy: number;
 }
 
+export type IntegrityEventType =
+  | 'TAB_HIDDEN'
+  | 'WINDOW_BLUR'
+  | 'COPY_ATTEMPT'
+  | 'CUT_ATTEMPT'
+  | 'PASTE_ATTEMPT'
+  | 'CONTEXT_MENU'
+  | 'DEVTOOLS_SHORTCUT';
+
+export interface IntegrityEventPayload {
+  attemptId: string;
+  eventType: IntegrityEventType;
+  metadata?: Record<string, any>;
+}
+
 export interface TestAttempt {
   id: string;
   userId: string;
@@ -262,6 +578,10 @@ export interface TestAttempt {
   weaknesses: string[];
   recommendations: string[];
   responses: QuestionResponseDetail[];
+  integrityStatus?: 'clean' | 'warning' | 'terminated';
+  violationCount?: number;
+  terminatedAt?: string | null;
+  terminationReason?: string | null;
 }
 
 export interface MegaEvent {
@@ -325,6 +645,65 @@ export interface AIDoubtResponse {
   shortcutTrick?: string;
   commonTrapToAvoid?: string;
 }
+
+export type AICopilotMode =
+  | 'PLACEMENT_COACH'
+  | 'PERFORMANCE_COACH'
+  | 'LEARNING_ASSISTANT'
+  | 'DOUBT_SOLVER'
+  | 'STUDY_PLANNER'
+  | 'APP_SUPPORT';
+
+export interface AIRecommendedAction {
+  label: string;
+  actionType:
+    | 'navigate_tab'
+    | 'open_modal'
+    | 'filter_tests'
+    | 'NAVIGATE_TAB'
+    | 'OPEN_TEST'
+    | 'OPEN_PRACTICE'
+    | 'OPEN_REVISION'
+    | 'OPEN_HISTORY'
+    | 'OPEN_CAREER_TRACK'
+    | string;
+  payload?: any;
+  target?: string;
+}
+
+
+export interface AICopilotUserContext {
+  userId?: string;
+  name?: string;
+  targetRole?: string;
+  targetCompany?: string;
+  lifetimeXp?: number;
+  level?: number;
+  weeklyXp?: number;
+  leagueTier?: string;
+}
+
+export interface AICopilotRequest {
+  message: string;
+  mode?: AICopilotMode;
+  userContext?: AICopilotUserContext;
+}
+
+export interface AICopilotResponse {
+  text: string;
+  mode: AICopilotMode;
+  actions?: AIRecommendedAction[];
+}
+
+export interface ChatMessage {
+  id: string;
+  sender: 'user' | 'assistant';
+  text: string;
+  mode?: AICopilotMode;
+  actions?: AIRecommendedAction[];
+  timestamp: string;
+}
+
 
 // ============================================================================
 // PHASE 2: TEST INTELLIGENCE & QUESTION BANK ARCHITECTURE
@@ -607,3 +986,72 @@ export interface CanonicalCodingProblem extends CanonicalQuestion {
   codingConfig?: CodingConfig;
 }
 
+export type PlacementStrategyState =
+  | 'NEW_CANDIDATE'
+  | 'BUILDING_FOUNDATION'
+  | 'FIXING_WEAKNESS'
+  | 'COMPANY_READYING'
+  | 'REVISION_REQUIRED'
+  | 'PERFORMANCE_RECOVERY'
+  | 'MAINTAINING';
+
+export interface PlacementPriority {
+  title: string;
+  reason: string;
+  action: AIRecommendedAction;
+}
+
+export interface PlacementStrategy {
+  state: PlacementStrategyState;
+  stateBadgeLabel: string;
+  priority: PlacementPriority;
+  supportingActions: AIRecommendedAction[];
+  contextSummary?: {
+    targetCompany: string | null;
+    targetRole: string | null;
+    performanceTrend: string;
+    criticalWeakness: string | null;
+    leagueTier: string;
+  };
+}
+
+export type AdPlacement = 'DASHBOARD_SIDEBAR' | 'DASHBOARD_TOP' | 'LANDING_TOP' | 'LANDING_BOTTOM';
+export type AdType = 'STRUCTURED_CARD' | 'OPTIONAL_CREATIVE_CARD';
+export type AdStatus = 'DRAFT' | 'ACTIVE' | 'PAUSED' | 'ARCHIVED';
+export type AdEventType = 'IMPRESSION' | 'CLICK';
+
+export interface Advertisement {
+  id: string;
+  sponsorName: string;
+  title: string;
+  description?: string | null;
+  logoUrl?: string | null;
+  bannerImageUrl?: string | null;
+  cardImageUrl?: string | null;
+  destinationUrl: string;
+  ctaText: string;
+  adType: AdType;
+  placement: AdPlacement | string;
+  status: AdStatus;
+  priority: number;
+  startAt?: string | null;
+  endAt?: string | null;
+  createdBy?: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+  is_test?: number;
+  impressionsCount?: number;
+  clicksCount?: number;
+  ctr?: number;
+}
+
+export interface AdvertisementEvent {
+  id: string;
+  adId: string;
+  eventType: AdEventType;
+  userId?: string | null;
+  sessionId?: string | null;
+  placement?: string | null;
+  createdAt?: string;
+  is_test?: number;
+}
